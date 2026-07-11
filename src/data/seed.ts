@@ -84,7 +84,12 @@ export const projects: Project[] = [
       en: "A promotional video for the Farnham Lions Club's 49th annual Beerex beer festival, capturing the atmosphere and community behind the event.",
       uk: "Промо-відео до 49-го щорічного пивного фестивалю Beerex від Farnham Lions Club — про атмосферу і людей, що стоять за подією.",
     },
-    coverImage: image("/projects/beerex-beer-festival/cover.jpg", "BEEREX — Beer Festival", 1920, 1079),
+    coverImage: image(
+      "/projects/beerex-beer-festival/cover.jpg",
+      "BEEREX — Beer Festival",
+      1920,
+      1079,
+    ),
     // TODO(owner): not yet uploaded to the public YouTube channel — add the real link when available.
     order: 3,
     featured: true,
@@ -197,7 +202,7 @@ export const profile: Profile = {
     en: "Viktor Yermakov, working under the name YERRMAK, is a cinematography student from Ukraine now based in the United Kingdom. His work blends technical precision with expressive, story-driven visuals — short films, music videos and promotional work built on a close attention to detail and a willingness to experiment, balancing control with creative instinct.",
     uk: "Віктор Єрмаков, що працює під брендом YERRMAK, — студент кінооператорського фаху з України, що зараз базується у Великій Британії. У його роботах технічна точність поєднується з виразною, наративною візуальністю — короткометражні фільми, музичні відео та промо-проєкти, збудовані на увазі до деталей і готовності експериментувати, балансуючи між контролем і творчим інстинктом.",
   },
-  portrait: image("/profile/portrait.jpg", "Viktor Yermakov portrait", 900, 900),
+  portrait: image("/profile/portrait.jpg", "Viktor Yermakov portrait", 394, 525),
   email: "yerrmakov@gmail.com",
   instagramUrl: "https://www.instagram.com/yerrmak/",
   youtubeUrl: "https://www.youtube.com/@yerrmak",

@@ -9,7 +9,7 @@ export function HeroVideo() {
   return (
     <video
       className="absolute inset-0 h-full w-full object-cover"
-      poster="/hero/hero-poster.svg"
+      poster="/hero/hero-poster.jpg"
       autoPlay
       muted
       loop

@@ -16,7 +16,7 @@ vi.mock("@/lib/content/queries", () => ({
     fullName: "Viktor Yermakov",
     tagline: "Cinematographer",
     biography: "A short biography.",
-    portrait: { url: "/profile/portrait.svg", alt: "Portrait", width: 1200, height: 1500 },
+    portrait: { url: "/profile/portrait.jpg", alt: "Portrait", width: 394, height: 525 },
     email: "yerrmakov@gmail.com",
     instagramUrl: "https://www.instagram.com/yerrmak",
     youtubeUrl: "https://www.youtube.com/@yerrmak",
