@@ -1,9 +1,9 @@
-import imageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 import type { Image } from "sanity";
 import type { ImageAsset } from "@/types";
 import { sanityClient } from "./client";
 
-const builder = imageUrlBuilder(sanityClient);
+const builder = createImageUrlBuilder(sanityClient);
 
 type SanityImageValue = Image & {
   alt?: string;
