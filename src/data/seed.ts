@@ -2,11 +2,13 @@ import type { Project, Profile, SiteSettings } from "@/types";
 
 /**
  * Real launch content (constitution Development Workflow: real content before
- * CMS wiring), assembled from `info/roadmap-yerrmak-portfolio-updated.md` and
- * the brief provided for this feature. Fields marked `TODO(owner)` are facts
- * this build could not verify against the live yerrmakov.wixsite.com/yerrmak
- * site (no fetch access) — replace them during the Sanity content migration
- * (tasks.md T056), not before.
+ * CMS wiring), gathered from the live yerrmakov.wixsite.com/yerrmak site and
+ * Viktor's YouTube channel (youtube.com/@yerrmak). Descriptions below are
+ * written in our own words from the facts published there, not copied
+ * verbatim. Fields marked `TODO(owner)` are facts that weren't confirmable
+ * from those public sources (e.g. no individual project page or YouTube
+ * upload exists yet) — replace them during the Sanity content migration
+ * (tasks.md T056).
  *
  * This module is the sole seed-data source; `src/lib/content/queries.ts`
  * reads it directly for Stories 1-5, then Story 6 swaps that file's
@@ -25,20 +27,23 @@ export const projects: Project[] = [
     slug: "the-withshaw-case",
     type: "video",
     title: { en: "The Withshaw Case", uk: "The Withshaw Case" },
-    year: "2023", // TODO(owner): confirm exact year
-    location: "United Kingdom", // TODO(owner): confirm shoot location
-    role: { en: "Cinematographer", uk: "Оператор-постановник" }, // TODO(owner): confirm exact role
-    description: {
-      en: "Short thriller-drama film.",
-      uk: "Короткометражний трилер-драма.",
+    year: "2025–2026", // TODO(owner): confirm exact production year (award is dated 2026)
+    location: "United Kingdom",
+    role: { en: "Cinematographer", uk: "Оператор-постановник" },
+    producerDirector: {
+      en: "Producer: Irina Burya · Director: Valerii Mamaev",
+      uk: "Продюсер: Ірина Буря · Режисер: Валерій Мамаєв",
     },
-    coverImage: image(
-      "/projects/the-withshaw-case/cover.svg",
-      "The Withshaw Case cover",
-      1600,
-      1000,
-    ),
-    youtubeUrl: "https://www.youtube.com/watch?v=TODO_WITHSHAW_CASE", // TODO(owner): real link
+    recognition: {
+      en: "Honourable Mention for Best Cinematography, London Global Film Awards 2026 — still on its festival run",
+      uk: "Почесна відзнака за найкращу операторську роботу, London Global Film Awards 2026 — фільм досі бере участь у фестивальному показі",
+    },
+    description: {
+      en: "A student thriller-drama following a team of investigators looking into an alleged case of possession, and the conflicting testimonies that complicate their search for the truth.",
+      uk: "Студентський трилер-драма про команду слідчих, що розслідує імовірний випадок одержимості, і суперечливі свідчення, які ускладнюють пошук правди.",
+    },
+    coverImage: image("/projects/the-withshaw-case/cover.jpg", "The Withshaw Case", 1551, 1081),
+    // No public release yet — festival run still in progress, so no YouTube link.
     gallery: [
       image("/projects/the-withshaw-case/bts-1.svg", "Behind the scenes 1", 1600, 1000),
       image("/projects/the-withshaw-case/bts-2.svg", "Behind the scenes 2", 1600, 1000),
@@ -51,15 +56,19 @@ export const projects: Project[] = [
     slug: "fusion-fever",
     type: "video",
     title: { en: "Fusion – Fever", uk: "Fusion – Fever" },
-    year: "2023", // TODO(owner): confirm exact year
-    location: "United Kingdom", // TODO(owner): confirm shoot location
+    year: "2025", // TODO(owner): confirm exact year
+    location: "United Kingdom",
     role: { en: "Director of Photography", uk: "Оператор-постановник (DP)" },
-    description: {
-      en: "Music video, shot as Director of Photography.",
-      uk: "Музичне відео, зняте на посаді оператора-постановника (DP).",
+    producerDirector: {
+      en: "Director: Ștefan-Iulian Craioveanu",
+      uk: "Режисер: Штефан-Юліан Крайовяну",
     },
-    coverImage: image("/projects/fusion-fever/cover.svg", "Fusion – Fever cover", 1600, 1000),
-    youtubeUrl: "https://www.youtube.com/watch?v=TODO_FUSION_FEVER", // TODO(owner): real link
+    description: {
+      en: "A music video built around adrenaline and pressure, using a hospital setting as a visual anchor while alternating dynamic in-car sequences with quieter, more intimate frames.",
+      uk: "Музичне відео на тему адреналіну й напруги, де лікарня слугує візуальним якорем, а динамічні сцени в авто чергуються з тихішими, інтимнішими кадрами.",
+    },
+    coverImage: image("/projects/fusion-fever/cover.jpg", "Fusion – Fever", 1920, 962),
+    // TODO(owner): not yet uploaded to the public YouTube channel — add the real link when available.
     order: 2,
     featured: true,
     published: true,
@@ -68,20 +77,15 @@ export const projects: Project[] = [
     slug: "beerex-beer-festival",
     type: "video",
     title: { en: "BEEREX — Beer Festival", uk: "BEEREX — Beer Festival" },
-    year: "2023", // TODO(owner): confirm exact year
-    location: "United Kingdom", // TODO(owner): confirm shoot location
-    role: { en: "Videographer", uk: "Відеограф" }, // TODO(owner): confirm exact role
+    year: "2026",
+    location: "Farnham, United Kingdom",
+    role: { en: "Videographer & Editor", uk: "Відеограф і монтажер" },
     description: {
-      en: "Promotional video for the BEEREX beer festival.",
-      uk: "Промо-відео для пивного фестивалю BEEREX.",
+      en: "A promotional video for the Farnham Lions Club's 49th annual Beerex beer festival, capturing the atmosphere and community behind the event.",
+      uk: "Промо-відео до 49-го щорічного пивного фестивалю Beerex від Farnham Lions Club — про атмосферу і людей, що стоять за подією.",
     },
-    coverImage: image(
-      "/projects/beerex-beer-festival/cover.svg",
-      "BEEREX Beer Festival cover",
-      1600,
-      1000,
-    ),
-    youtubeUrl: "https://www.youtube.com/watch?v=TODO_BEEREX", // TODO(owner): real link
+    coverImage: image("/projects/beerex-beer-festival/cover.jpg", "BEEREX — Beer Festival", 1920, 1079),
+    // TODO(owner): not yet uploaded to the public YouTube channel — add the real link when available.
     order: 3,
     featured: true,
     published: true,
@@ -90,15 +94,15 @@ export const projects: Project[] = [
     slug: "first-glimpse",
     type: "video",
     title: { en: "First Glimpse", uk: "First Glimpse" },
-    year: "2022", // TODO(owner): confirm exact year
-    location: "United Kingdom", // TODO(owner): confirm shoot location
-    role: { en: "Director", uk: "Режисер" }, // TODO(owner): confirm exact role
+    year: "2025",
+    location: "United Kingdom",
+    role: { en: "Director", uk: "Режисер" },
     description: {
-      en: "Experimental short film.",
-      uk: "Експериментальна короткометражка.",
+      en: "Yerrmak's first experimental short film, told without dialogue — an intimate, black-and-white study of vulnerability and identity built from close observation of light, texture and silence.",
+      uk: "Перший експериментальний короткий фільм Yerrmak без діалогів — інтимне чорно-біле дослідження вразливості й ідентичності через світло, текстуру й тишу.",
     },
-    coverImage: image("/projects/first-glimpse/cover.svg", "First Glimpse cover", 1600, 1000),
-    youtubeUrl: "https://www.youtube.com/watch?v=TODO_FIRST_GLIMPSE", // TODO(owner): real link
+    coverImage: image("/projects/first-glimpse/cover.jpg", "First Glimpse", 1920, 1606),
+    youtubeUrl: "https://www.youtube.com/watch?v=0xkCyI6Iyu8",
     order: 4,
     featured: false,
     published: true,
@@ -107,15 +111,19 @@ export const projects: Project[] = [
     slug: "buried-in-me",
     type: "video",
     title: { en: "Buried In Me", uk: "Buried In Me" },
-    year: "2022", // TODO(owner): confirm exact year
-    location: "United Kingdom", // TODO(owner): confirm shoot location
+    year: "2025", // TODO(owner): confirm exact year
+    location: "United Kingdom",
     role: { en: "Director of Photography", uk: "Оператор-постановник (DP)" },
-    description: {
-      en: "Short crime-drama film, shot as Director of Photography.",
-      uk: "Короткометражна кримінальна драма, знята на посаді оператора-постановника (DP).",
+    producerDirector: {
+      en: "Producer: Irina Burya · Director: Lisa Yatsenko",
+      uk: "Продюсер: Ірина Буря · Режисер: Ліза Яценко",
     },
-    coverImage: image("/projects/buried-in-me/cover.svg", "Buried In Me cover", 1600, 1000),
-    youtubeUrl: "https://www.youtube.com/watch?v=TODO_BURIED_IN_ME", // TODO(owner): real link
+    description: {
+      en: "A crime-drama short about an ex-car thief confronting the consequences of his past, shot as part of a full-scale narrative production with a larger crew.",
+      uk: "Кримінальна драма про колишнього викрадача автомобілів, який зіштовхується з наслідками свого минулого — знята як частина повноцінної наративної продакшн-команди.",
+    },
+    coverImage: image("/projects/buried-in-me/cover.jpg", "Buried In Me", 1920, 741),
+    // TODO(owner): not yet uploaded to the public YouTube channel — add the real link when available.
     order: 5,
     featured: true,
     published: true,
@@ -124,19 +132,19 @@ export const projects: Project[] = [
     slug: "yara-steel",
     type: "video",
     title: { en: "YARA — Steel", uk: "YARA — Сталь" },
-    year: "2021", // TODO(owner): confirm exact year
-    location: "United Kingdom", // TODO(owner): confirm shoot location
-    role: { en: "Cinematographer", uk: "Оператор-постановник" }, // TODO(owner): confirm exact role
+    year: "2024",
+    location: "United Kingdom",
+    role: { en: "Director, Cinematographer & Editor", uk: "Режисер, оператор і монтажер" },
     recognition: {
-      en: "200,000+ views on YouTube",
-      uk: "200 000+ переглядів на YouTube",
+      en: "200,000+ views across platforms; broadcast on Ukrainian TV channels M1 and M2",
+      uk: "200 000+ переглядів на різних платформах; трансляція на українських телеканалах M1 і M2",
     },
     description: {
-      en: "Music video with over 200,000 views.",
-      uk: "Музичне відео з понад 200 000 переглядів.",
+      en: "Yerrmak's first music video, made for a song dedicated to Ukraine's resistance against Russian aggression — conceived, shot and edited in three days, blending live camera footage with projected imagery.",
+      uk: "Перше музичне відео Yerrmak, зняте для пісні, присвяченої опору України російській агресії — задумане, зняте й змонтоване за три дні, поєднує живу камеру з проєкційними зображеннями.",
     },
-    coverImage: image("/projects/yara-steel/cover.svg", "YARA — Steel cover", 1600, 1000),
-    youtubeUrl: "https://www.youtube.com/watch?v=TODO_YARA_STEEL", // TODO(owner): real link
+    coverImage: image("/projects/yara-steel/cover.jpg", "YARA — Steel", 1920, 1075),
+    youtubeUrl: "https://www.youtube.com/watch?v=ScGBGBQLPQI",
     gallery: [
       image("/projects/yara-steel/bts-1.svg", "Behind the scenes 1", 1600, 1000),
       image("/projects/yara-steel/bts-2.svg", "Behind the scenes 2", 1600, 1000),
@@ -148,7 +156,7 @@ export const projects: Project[] = [
   {
     // Not one of the six real launch films — a placeholder photo project so
     // the Photography filter/preview/lightbox are exercisable pre-launch
-    // (spec Assumptions: "no photo gallery on the current site yet"). Replace
+    // (spec Assumptions: no dedicated photo gallery published yet). Replace
     // with the owner's first real photo set during content migration.
     slug: "coastal-frames",
     type: "photo",
@@ -179,24 +187,26 @@ export const profile: Profile = {
   name: "YERRMAK",
   fullName: "Viktor Yermakov",
   tagline: {
-    en: "Cinematographer · Self-described nerd technician",
-    uk: "Кінооператор · Технічний нердер за самовизначенням",
+    en: "Cinematographer with a nerdy technical streak, chasing precise, emotionally grounded images",
+    uk: "Кінооператор із технічною жилкою, що прагне точних і емоційно вивірених кадрів",
   },
   biography: {
-    // TODO(owner): replace with the approved bio copy from the current site's
-    // About & Contact page (roadmap: "уже написаний і узгоджений") — this is
-    // a placeholder assembled only from the confirmed brief facts.
-    en: "Viktor Yermakov, working under the name YERRMAK, is a cinematographer and photographer based in the United Kingdom, currently studying film production. His work spans short films, music videos, and promotional video, with an eye for cinematic, story-driven imagery.",
-    uk: "Віктор Єрмаков, що працює під брендом YERRMAK, — кінооператор і фотограф, що базується у Великій Британії та навчається на кінопродакшн. У портфоліо — короткометражні фільми, музичні відео та промо-ролики з акцентом на кінематографічну, наративну візуальність.",
+    // Paraphrased from the site's own About copy and Viktor's YouTube channel
+    // description ("I'm Viktor — a cinematography student from Ukraine, based
+    // in the UK.") rather than reproduced verbatim.
+    en: "Viktor Yermakov, working under the name YERRMAK, is a cinematography student from Ukraine now based in the United Kingdom. His work blends technical precision with expressive, story-driven visuals — short films, music videos and promotional work built on a close attention to detail and a willingness to experiment, balancing control with creative instinct.",
+    uk: "Віктор Єрмаков, що працює під брендом YERRMAK, — студент кінооператорського фаху з України, що зараз базується у Великій Британії. У його роботах технічна точність поєднується з виразною, наративною візуальністю — короткометражні фільми, музичні відео та промо-проєкти, збудовані на увазі до деталей і готовності експериментувати, балансуючи між контролем і творчим інстинктом.",
   },
-  portrait: image("/profile/portrait.svg", "Viktor Yermakov portrait", 1200, 1500),
+  portrait: image("/profile/portrait.jpg", "Viktor Yermakov portrait", 900, 900),
   email: "yerrmakov@gmail.com",
-  instagramUrl: "https://www.instagram.com/yerrmak", // TODO(owner): confirm exact handle
+  instagramUrl: "https://www.instagram.com/yerrmak/",
   youtubeUrl: "https://www.youtube.com/@yerrmak",
 };
 
 export const siteSettings: SiteSettings = {
-  showreelUrl: "https://www.youtube.com/watch?v=TODO_SHOWREEL", // TODO(owner): real link
+  // TODO(owner): pick a real showreel video (or cut a new one) and link it here —
+  // none of the current YouTube uploads is framed as a general showreel.
+  showreelUrl: "https://www.youtube.com/watch?v=0xkCyI6Iyu8",
   contactCtaText: {
     en: "Let's create something",
     uk: "Створімо щось разом",
