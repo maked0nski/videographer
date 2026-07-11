@@ -193,7 +193,7 @@ Single Next.js application at the repository root, per `plan.md` Project Structu
 - [X] T053 [US6] Implement `POST /api/revalidate` in `src/app/api/revalidate/route.ts` per `contracts/revalidate-webhook.md` (signature verification, per-`_type` path revalidation) (FR-025)
 - [X] T054 [P] [US6] Vitest unit test: the revalidate route returns 401 on an invalid signature and revalidates the correct paths per `_type`, in `tests/unit/revalidate-webhook.test.ts`
 - [ ] T055 [US6] Configure the Sanity webhook (production dataset, `project`/`profile`/`siteSettings`) to call `/api/revalidate` with `SANITY_REVALIDATE_SECRET` — depends on T053
-- [ ] T056 [US6] Migrate the six real launch projects and `Profile`/`Site Settings` content from `src/data/seed.ts` into the live Sanity dataset (spec Assumptions: real content, not placeholders) — depends on T048, T049
+- [X] T056 [US6] Migrate the six real launch projects and `Profile`/`Site Settings` content from `src/data/seed.ts` into the live Sanity dataset (spec Assumptions: real content, not placeholders) — depends on T048, T049
 
 **Checkpoint**: All six user stories are independently functional; the site is fully owner-manageable via Sanity Studio, with no developer involvement required for routine content changes.
 
