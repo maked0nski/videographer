@@ -49,3 +49,7 @@ next-env.d.ts
 # sanity
 .sanity/
 
+# local Claude Code settings / raw source assets not meant for the repo
+.claude/settings.local.json
+/info/data/
+

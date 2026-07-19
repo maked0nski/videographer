@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   images: {
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
     // Placeholder seed assets (src/data/seed.ts) are local SVGs until the site
