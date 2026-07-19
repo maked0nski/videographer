@@ -88,11 +88,15 @@ export default defineType({
       description: "e.g. https://youtube.com/watch?v=... — required for Video projects.",
       hidden: ({ document }) => document?.type !== "video",
       validation: (rule) =>
-        rule.custom((value, context) => {
-          const doc = context.document as { type?: string } | undefined;
-          if (doc?.type === "video" && !value) return "Required for Video projects";
-          return true;
-        }),
+        rule
+          .custom((value, context) => {
+            const doc = context.document as { type?: string } | undefined;
+            if (doc?.type === "video" && !value) {
+              return "No YouTube link yet — fine to publish, but the video player won't show on the live page until this is filled in.";
+            }
+            return true;
+          })
+          .warning(),
     }),
     defineField({
       name: "gallery",
