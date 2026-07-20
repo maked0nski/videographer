@@ -18,8 +18,8 @@ export async function generateMetadata({
 }
 
 /**
- * Biography, portrait, and direct contact links (email, Instagram, YouTube)
- * — no on-site contact form anywhere (FR-016, FR-017).
+ * Biography, portrait, and direct contact links (email, Instagram, YouTube,
+ * LinkedIn, Facebook) — no on-site contact form anywhere (FR-016, FR-017).
  */
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: rawLocale } = await params;
