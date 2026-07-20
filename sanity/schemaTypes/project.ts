@@ -15,6 +15,7 @@ export default defineType({
       name: "type",
       title: "Type",
       type: "string",
+      description: "Drives which fields below apply and how this project displays across the site (Video vs Photo) — pick this first.",
       options: {
         list: [
           { title: "Video", value: "video" },
@@ -28,6 +29,7 @@ export default defineType({
       name: "title",
       title: "Title",
       type: "localeString",
+      description: "Shown as the page heading and in Work list cards. Fill in at least one language; the other language falls back to whichever one is filled.",
       validation: (rule) =>
         rule.custom((value: { uk?: string; en?: string } | undefined) =>
           value?.uk || value?.en ? true : "Provide at least one language",
@@ -46,6 +48,7 @@ export default defineType({
       name: "coverImage",
       title: "Cover image",
       type: "image",
+      description: "The main thumbnail — used on Work list cards, homepage previews, and as the poster before a video is played.",
       options: { hotspot: true },
       fields: [defineField({ name: "alt", title: "Alt text", type: "string" })],
       validation: (rule) => rule.required(),
@@ -80,6 +83,7 @@ export default defineType({
       name: "description",
       title: "Description",
       type: "localeText",
+      description: "A short paragraph shown under the title on the project's own page. Keep it to 1–3 sentences.",
     }),
     defineField({
       name: "youtubeUrl",
@@ -97,6 +101,15 @@ export default defineType({
             return true;
           })
           .warning(),
+    }),
+    defineField({
+      name: "previewClip",
+      title: "Preview clip (muted loop)",
+      type: "file",
+      options: { accept: "video/mp4,video/webm" },
+      description:
+        "Optional — a short (3–5s), heavily compressed, silent loop shown before the visitor clicks Play. Falls back to the cover image when not set. Video projects only.",
+      hidden: ({ document }) => document?.type !== "video",
     }),
     defineField({
       name: "gallery",
@@ -131,6 +144,7 @@ export default defineType({
       name: "featured",
       title: "Featured on homepage",
       type: "boolean",
+      description: "Shows this project in the homepage's Selected Work section. Turn off for projects you only want listed on the Work page.",
       initialValue: false,
     }),
     defineField({

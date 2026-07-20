@@ -16,6 +16,8 @@ export interface Project {
   coverImage: ImageAsset;
   /** Required when `type === "video"`; unused when `type === "photo"`. */
   youtubeUrl?: string;
+  /** Muted looping preview shown before Play is clicked; video projects only. */
+  previewClipUrl?: string;
   /** Behind-the-scenes set for video projects; primary gallery for photo projects. */
   gallery?: ImageAsset[];
   order: number;
@@ -59,6 +61,7 @@ export interface ResolvedProject {
   description: string;
   coverImage: ImageAsset;
   youtubeUrl?: string;
+  previewClipUrl?: string;
   gallery?: ImageAsset[];
   order: number;
   featured: boolean;

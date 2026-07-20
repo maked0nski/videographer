@@ -42,7 +42,7 @@ describe("Project detail page — video without youtubeUrl", () => {
     expect(screen.queryByRole("button", { name: /play video/i })).not.toBeInTheDocument();
   });
 
-  it("renders the interactive VideoPlayerTrigger when youtubeUrl is present", async () => {
+  it("renders the interactive HeroVideoPlayer when youtubeUrl is present", async () => {
     const { getProjectBySlug } = await import("@/lib/content/queries");
     vi.mocked(getProjectBySlug).mockResolvedValue({
       ...baseProject,
