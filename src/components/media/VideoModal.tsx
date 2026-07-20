@@ -4,20 +4,7 @@ import { useRef } from "react";
 import { CloseButton } from "@/components/ui/CloseButton";
 import { useFocusTrap } from "@/lib/use-focus-trap";
 import { useBodyScrollLock } from "@/lib/use-body-scroll-lock";
-
-function toYoutubeNoCookieEmbedUrl(youtubeUrl: string): string | null {
-  try {
-    const url = new URL(youtubeUrl);
-    let videoId = url.searchParams.get("v");
-    if (!videoId && url.hostname.includes("youtu.be")) {
-      videoId = url.pathname.slice(1);
-    }
-    if (!videoId) return null;
-    return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
-  } catch {
-    return null;
-  }
-}
+import { toYoutubeNoCookieEmbedUrl } from "@/lib/youtube";
 
 /**
  * The iframe element is only created while `isOpen` is true, and only ever
