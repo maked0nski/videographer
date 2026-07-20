@@ -51,6 +51,7 @@ export async function getProjectBySlug(
     description: resolveLocalized(project.description, locale) ?? "",
     coverImage: project.coverImage,
     youtubeUrl: project.youtubeUrl,
+    previewClipUrl: project.previewClipUrl,
     gallery: project.gallery,
     order: project.order,
     featured: project.featured,
