@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import type { Metadata } from "next";
 import type { Locale } from "@/types";
 import { isLocale, getMessages, localizedAlternates } from "@/lib/i18n";
@@ -58,6 +59,19 @@ export default async function ProjectPage({
           playLabel={t.project.playVideo}
           closeLabel={t.video.closeModal}
         />
+      )}
+
+      {project.type === "video" && !project.youtubeUrl && (
+        <div className="bg-bg-secondary relative aspect-video w-full overflow-hidden">
+          <Image
+            src={project.coverImage.url}
+            alt={project.coverImage.alt}
+            fill
+            sizes="100vw"
+            className="object-cover"
+            priority
+          />
+        </div>
       )}
 
       <div className="mt-10">
