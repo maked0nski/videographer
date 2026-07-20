@@ -42,6 +42,13 @@ export default defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: "aboutVideoUrl",
+      title: "Video presentation (YouTube URL)",
+      type: "url",
+      description:
+        "Optional — a personal intro/showreel video shown on the About page, between the biography and \"Get in touch\". The whole block only appears once this is filled in.",
+    }),
+    defineField({
       name: "email",
       title: "Email",
       type: "string",
@@ -73,13 +80,6 @@ export default defineType({
       title: "Facebook URL",
       type: "url",
       description: "Optional — the Facebook icon only appears on the site once this is filled in.",
-    }),
-    defineField({
-      name: "aboutVideoUrl",
-      title: "Video presentation (YouTube URL)",
-      type: "url",
-      description:
-        "Optional — a personal intro/showreel video shown on the About page, between the biography and \"Get in touch\". The whole block only appears once this is filled in.",
     }),
   ],
   preview: {
