@@ -7,7 +7,7 @@ import { getAdjacentProjects, getProjectBySlug } from "@/lib/content/queries";
 import { ProjectMeta } from "@/components/portfolio/ProjectMeta";
 import { PrevNextNav } from "@/components/portfolio/PrevNextNav";
 import { PhotoGallery } from "@/components/media/PhotoGallery";
-import { VideoPlayerTrigger } from "@/components/media/VideoPlayerTrigger";
+import { HeroVideoPlayer } from "@/components/media/HeroVideoPlayer";
 
 async function loadProject(rawLocale: string, slug: string) {
   if (!isLocale(rawLocale)) notFound();
@@ -53,11 +53,11 @@ export default async function ProjectPage({
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
       {project.type === "video" && project.youtubeUrl && (
-        <VideoPlayerTrigger
+        <HeroVideoPlayer
           youtubeUrl={project.youtubeUrl}
-          poster={project.coverImage}
+          coverImage={project.coverImage}
+          previewClipUrl={project.previewClipUrl}
           playLabel={t.project.playVideo}
-          closeLabel={t.video.closeModal}
         />
       )}
 
