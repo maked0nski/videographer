@@ -99,6 +99,15 @@ export default defineType({
           .warning(),
     }),
     defineField({
+      name: "previewClip",
+      title: "Preview clip (muted loop)",
+      type: "file",
+      options: { accept: "video/mp4,video/webm" },
+      description:
+        "Optional — a short (3–5s), heavily compressed, silent loop shown before the visitor clicks Play. Falls back to the cover image when not set. Video projects only.",
+      hidden: ({ document }) => document?.type !== "video",
+    }),
+    defineField({
       name: "gallery",
       title: "Gallery",
       description:

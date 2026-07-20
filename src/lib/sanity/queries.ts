@@ -33,6 +33,7 @@ interface SanityProjectDoc {
   description: Localized<string>;
   coverImage: SanityImageRef;
   youtubeUrl?: string;
+  previewClipUrl?: string;
   gallery?: SanityImageRef[];
   order: number;
   featured: boolean;
@@ -79,6 +80,7 @@ const PROJECT_FULL_PROJECTION = `{
   description,
   coverImage,
   youtubeUrl,
+  "previewClipUrl": previewClip.asset->url,
   gallery,
   order,
   featured
@@ -121,6 +123,7 @@ export async function getProjectBySlug(
     description: resolveLocalized(doc.description, locale) ?? "",
     coverImage: toImageAsset(doc.coverImage),
     youtubeUrl: doc.youtubeUrl,
+    previewClipUrl: doc.previewClipUrl,
     gallery: doc.gallery?.map((image) => toImageAsset(image)),
     order: doc.order,
     featured: doc.featured,
