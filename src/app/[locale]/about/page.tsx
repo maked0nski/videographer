@@ -6,6 +6,14 @@ import { isLocale, getMessages, localizedAlternates } from "@/lib/i18n";
 import { getProfile } from "@/lib/content/queries";
 import { SocialLinks } from "@/components/about/SocialLinks";
 
+/**
+ * Falls back to a fresh render at most once an hour even if a Sanity
+ * webhook-triggered on-demand revalidation is ever missed (e.g. right after
+ * a container recreate wipes the on-disk route cache before a new publish
+ * re-primes it) — a time-based safety net alongside on-demand revalidation.
+ */
+export const revalidate = 3600;
+
 export async function generateMetadata({
   params,
 }: {
