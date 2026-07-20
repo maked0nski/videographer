@@ -92,6 +92,8 @@ export async function getProfile(locale: Locale): Promise<ResolvedProfile> {
     email: profile.email,
     instagramUrl: profile.instagramUrl,
     youtubeUrl: profile.youtubeUrl,
+    linkedinUrl: profile.linkedinUrl,
+    facebookUrl: profile.facebookUrl,
   };
 }
 
