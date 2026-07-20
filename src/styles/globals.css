@@ -4,11 +4,11 @@
    type, and motion — every page and both locales consume these, never a raw hex
    or one-off value in component code. */
 @theme {
-  --color-bg: #050505;
-  --color-bg-secondary: #0c0c0c;
+  --color-bg: #222222;
+  --color-bg-secondary: #2a2a2a;
   --color-text: #f5f5f5;
   --color-text-secondary: #9a9a9a;
-  --color-border: #202020;
+  --color-border: #3a3a3a;
   --color-accent: #c3cb00;
 
   --font-heading: "Space Grotesk", "Manrope", sans-serif;

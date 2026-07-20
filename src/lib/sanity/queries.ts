@@ -47,6 +47,8 @@ interface SanityProfileDoc {
   email: string;
   instagramUrl: string;
   youtubeUrl: string;
+  linkedinUrl?: string;
+  facebookUrl?: string;
 }
 
 interface SanitySiteSettingsDoc {
@@ -173,6 +175,8 @@ export async function getProfile(locale: Locale): Promise<ResolvedProfile> {
     email: doc.email,
     instagramUrl: doc.instagramUrl,
     youtubeUrl: doc.youtubeUrl,
+    linkedinUrl: doc.linkedinUrl,
+    facebookUrl: doc.facebookUrl,
   };
 }
 

@@ -45,7 +45,9 @@
     "contactHeading": "Зв'язатися",
     "email": "Email",
     "instagram": "Instagram",
-    "youtube": "YouTube"
+    "youtube": "YouTube",
+    "linkedin": "LinkedIn",
+    "facebook": "Facebook"
   },
   "video": {
     "closeModal": "Закрити відео"

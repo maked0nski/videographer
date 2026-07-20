@@ -11,6 +11,8 @@ export interface Profile {
   email: string;
   instagramUrl: string;
   youtubeUrl: string;
+  linkedinUrl?: string;
+  facebookUrl?: string;
 }
 
 /** Locale-resolved shape handed to components. */
@@ -23,4 +25,6 @@ export interface ResolvedProfile {
   email: string;
   instagramUrl: string;
   youtubeUrl: string;
+  linkedinUrl?: string;
+  facebookUrl?: string;
 }
