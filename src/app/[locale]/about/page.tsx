@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { Locale } from "@/types";
 import { isLocale, getMessages, localizedAlternates } from "@/lib/i18n";
 import { getProfile } from "@/lib/content/queries";
+import { SocialLinks } from "@/components/about/SocialLinks";
 
 export async function generateMetadata({
   params,
@@ -50,33 +51,18 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
           <div id="contact" className="border-border mt-12 border-t pt-8">
             <h2 className="text-xl font-semibold">{t.about.contactHeading}</h2>
-            <ul className="mt-6 flex flex-col gap-4 text-sm">
-              <li>
-                <a href={`mailto:${profile.email}`} className="hover:text-accent transition-colors">
-                  {t.about.email}: {profile.email}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={profile.instagramUrl}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="hover:text-accent transition-colors"
-                >
-                  {t.about.instagram}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={profile.youtubeUrl}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="hover:text-accent transition-colors"
-                >
-                  {t.about.youtube}
-                </a>
-              </li>
-            </ul>
+            <div className="mt-6">
+              <SocialLinks
+                profile={profile}
+                labels={{
+                  email: t.about.email,
+                  instagram: t.about.instagram,
+                  youtube: t.about.youtube,
+                  linkedin: t.about.linkedin,
+                  facebook: t.about.facebook,
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
