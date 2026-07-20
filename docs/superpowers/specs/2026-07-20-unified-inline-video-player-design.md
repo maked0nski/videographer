@@ -151,6 +151,34 @@ import and its usage with `HeroVideoPlayer`, passing `previewClipUrl` from
     `role=dialog` appears, it asserts an `iframe[src*="youtube-nocookie.com"]`
     is present directly on the page (no dialog role at all).
 
+## Studio content-authoring descriptions
+
+Separately from the video player work, add short `description` text to
+every Sanity Studio field across all three schemas that currently lacks one,
+so the site owner always knows what a field does and when to fill it in
+without leaving Studio. This is a pure documentation/content-authoring
+change — no field types, validation, or data shapes change.
+
+**`sanity/schemaTypes/project.ts`**:
+- `type`: "Drives which fields below apply and how this project displays across the site (Video vs Photo) — pick this first."
+- `title`: "Shown as the page heading and in Work list cards. Fill in at least one language; the other language falls back to whichever one is filled."
+- `coverImage`: "The main thumbnail — used on Work list cards, homepage previews, and as the poster before a video is played."
+- `description`: "A short paragraph shown under the title on the project's own page. Keep it to 1–3 sentences."
+- `featured`: "Shows this project in the homepage's Selected Work section. Turn off for projects you only want listed on the Work page."
+
+**`sanity/schemaTypes/profile.ts`**:
+- `name`: "Short brand name shown in the site header and footer (e.g. \"YERRMAK\")."
+- `fullName`: "Full name, shown on the About page and used as the portrait's alt text."
+- `tagline`: "One-line description shown under the name on the homepage/About page."
+- `biography`: "The paragraph shown on the About page, next to the portrait."
+- `portrait`: "Photo shown on the About page next to the biography."
+- `email`: "Shown as a clickable mail icon in the \"Get in touch\" section — this site has no contact form."
+- `instagramUrl`: "Full profile URL (e.g. https://www.instagram.com/yerrmak/) — shown as an icon in \"Get in touch\"."
+- `youtubeUrl`: "Full channel URL — shown as an icon in \"Get in touch\". This is your channel, not a specific project's video link."
+
+**`sanity/schemaTypes/siteSettings.ts`**:
+- `contactCtaText`: "Heading shown above the \"Get in touch\" button on the homepage (e.g. \"Let's create something\")."
+
 ## Out of scope for this cycle
 
 - Technical Specs (camera/lens), Stills gallery, two-column meta layout,
