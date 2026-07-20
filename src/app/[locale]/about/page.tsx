@@ -42,47 +42,47 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
     <div className="mx-auto max-w-4xl px-6 py-16">
       <h1 className="text-3xl font-semibold sm:text-4xl">{t.about.heading}</h1>
 
-      <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-[280px_1fr]">
-        <div className="bg-bg-secondary relative aspect-[4/5] overflow-hidden">
-          <Image
-            src={profile.portrait.url}
-            alt={profile.portrait.alt}
-            fill
-            sizes="280px"
-            className="object-cover"
-          />
+      <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-[360px_1fr]">
+        <div className="sm:sticky sm:top-24 sm:self-start">
+          <div className="bg-bg-secondary relative aspect-[4/5] overflow-hidden">
+            <Image
+              src={profile.portrait.url}
+              alt={profile.portrait.alt}
+              fill
+              sizes="360px"
+              className="object-cover"
+            />
+          </div>
         </div>
 
-        <div>
-          <p className="text-text-secondary text-lg leading-relaxed whitespace-pre-line">
-            {profile.biography}
-          </p>
+        <p className="text-text-secondary text-lg leading-relaxed whitespace-pre-line">
+          {profile.biography}
+        </p>
+      </div>
 
-          {profile.aboutVideoUrl && (
-            <div className="mt-12">
-              <HeroVideoPlayer
-                youtubeUrl={profile.aboutVideoUrl}
-                coverImage={profile.portrait}
-                playLabel={t.project.playVideo}
-              />
-            </div>
-          )}
+      {profile.aboutVideoUrl && (
+        <div className="mt-12">
+          <HeroVideoPlayer
+            youtubeUrl={profile.aboutVideoUrl}
+            coverImage={profile.portrait}
+            playLabel={t.project.playVideo}
+          />
+        </div>
+      )}
 
-          <div id="contact" className="border-border mt-12 border-t pt-8">
-            <h2 className="text-xl font-semibold">{t.about.contactHeading}</h2>
-            <div className="mt-6">
-              <SocialLinks
-                profile={profile}
-                labels={{
-                  email: t.about.email,
-                  instagram: t.about.instagram,
-                  youtube: t.about.youtube,
-                  linkedin: t.about.linkedin,
-                  facebook: t.about.facebook,
-                }}
-              />
-            </div>
-          </div>
+      <div id="contact" className="border-border mt-12 border-t pt-8">
+        <h2 className="text-xl font-semibold">{t.about.contactHeading}</h2>
+        <div className="mt-6">
+          <SocialLinks
+            profile={profile}
+            labels={{
+              email: t.about.email,
+              instagram: t.about.instagram,
+              youtube: t.about.youtube,
+              linkedin: t.about.linkedin,
+              facebook: t.about.facebook,
+            }}
+          />
         </div>
       </div>
     </div>
