@@ -104,25 +104,30 @@ matching the existing wrapper classes already used by `VideoPlayerTrigger`):
    sets `isActive = true`. Reuses the existing `VisuallyHidden` + `svg
    aria-hidden` icon-button pattern already used by `CloseButton.tsx` and
    the current `VideoPlayerTrigger.tsx`.
-3. **Active layer** (top-most once active): only mounted once `isActive` is
-   `true` — a lazily-created `<iframe src={toYoutubeNoCookieEmbedUrl(youtubeUrl) + '&autoplay=1'} allowFullScreen>`,
-   exactly like the current modal's iframe (same `allow` attribute, same
-   `youtube-nocookie.com` origin, same "no request before the click"
-   guarantee — FR-003/FR-004/FR-014 continue to hold, just without the
-   dialog wrapper).
+3. **Active layer** (rendered first in DOM order, so it stacks *beneath* the
+   preview layer by default with no `z-index` needed): only mounted once
+   `isActive` is `true` — a lazily-created `<iframe
+   src={toYoutubeNoCookieEmbedUrl(youtubeUrl)} allowFullScreen>` (the helper
+   already appends `?autoplay=1`), exactly like the current modal's iframe
+   (same `allow` attribute, same `youtube-nocookie.com` origin, same "no
+   request before the click" guarantee — FR-003/FR-004/FR-014 continue to
+   hold, just without the dialog wrapper).
 
 **Transition (click → active), and avoiding a black flash**: the preview
 layer (video or image + overlay) is never removed from the DOM on
 activation — it is hidden with `opacity-0 pointer-events-none` via a CSS
-transition (e.g. `transition-opacity duration-300`), while the iframe layer
-simultaneously transitions from `opacity-0` to `opacity-100`. Because the
-iframe needs a brief moment to initialize and paint its first frame, the
-still-visible (fading, not gone) preview layer underneath prevents any bare
-background from flashing through during that gap — a `visibility`/`z-index`
-choice, not a load-event race. Once the preview `<video>` element's opacity
-reaches 0, call `.pause()` on it (a simple `onTransitionEnd` handler) so it
-stops consuming CPU/battery in the background — it stays in the DOM,
-paused, not removed.
+transition (e.g. `transition-opacity duration-300`). The iframe layer sits
+underneath at full opacity from the moment it mounts; there is no separate
+fade-in animation for it — the crossfade illusion comes entirely from the
+preview layer fading away to reveal it. Because the iframe needs a brief
+moment to initialize and paint its first frame, the still-visible (fading,
+not gone) preview layer on top prevents any bare background from flashing
+through during that gap — a DOM-order/opacity choice, not a load-event
+race. Once the preview `<video>` element's opacity transition ends, call
+`.pause()` on it (an `onTransitionEnd` handler, guarded to fire only for the
+container's own `opacity` transition — not a bubbled `transform`
+transition from the Play button's hover effect) so it stops consuming
+CPU/battery in the background — it stays in the DOM, paused, not removed.
 
 **Props**: `HeroVideoPlayer({ youtubeUrl, coverImage, previewClipUrl, playLabel })` —
 no `closeLabel`/`onClose` (no modal to close), no `poster` prop rename needed
