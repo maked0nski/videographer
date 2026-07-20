@@ -13,6 +13,8 @@ export interface Profile {
   youtubeUrl: string;
   linkedinUrl?: string;
   facebookUrl?: string;
+  /** Personal video presentation shown on the About page; hidden entirely when unset. */
+  aboutVideoUrl?: string;
 }
 
 /** Locale-resolved shape handed to components. */
@@ -27,4 +29,5 @@ export interface ResolvedProfile {
   youtubeUrl: string;
   linkedinUrl?: string;
   facebookUrl?: string;
+  aboutVideoUrl?: string;
 }

@@ -50,6 +50,7 @@ interface SanityProfileDoc {
   youtubeUrl: string;
   linkedinUrl?: string;
   facebookUrl?: string;
+  aboutVideoUrl?: string;
 }
 
 interface SanitySiteSettingsDoc {
@@ -180,6 +181,7 @@ export async function getProfile(locale: Locale): Promise<ResolvedProfile> {
     youtubeUrl: doc.youtubeUrl,
     linkedinUrl: doc.linkedinUrl,
     facebookUrl: doc.facebookUrl,
+    aboutVideoUrl: doc.aboutVideoUrl,
   };
 }
 

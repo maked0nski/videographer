@@ -5,6 +5,7 @@ import type { Locale } from "@/types";
 import { isLocale, getMessages, localizedAlternates } from "@/lib/i18n";
 import { getProfile } from "@/lib/content/queries";
 import { SocialLinks } from "@/components/about/SocialLinks";
+import { HeroVideoPlayer } from "@/components/media/HeroVideoPlayer";
 
 /**
  * Falls back to a fresh render at most once an hour even if a Sanity
@@ -56,6 +57,16 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           <p className="text-text-secondary text-lg leading-relaxed whitespace-pre-line">
             {profile.biography}
           </p>
+
+          {profile.aboutVideoUrl && (
+            <div className="mt-12">
+              <HeroVideoPlayer
+                youtubeUrl={profile.aboutVideoUrl}
+                coverImage={profile.portrait}
+                playLabel={t.project.playVideo}
+              />
+            </div>
+          )}
 
           <div id="contact" className="border-border mt-12 border-t pt-8">
             <h2 className="text-xl font-semibold">{t.about.contactHeading}</h2>

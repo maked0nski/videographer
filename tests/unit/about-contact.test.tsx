@@ -65,4 +65,31 @@ describe("About & Contact page", () => {
     const facebookLink = screen.getByRole("link", { name: /facebook/i });
     expect(facebookLink).toHaveAttribute("href", "https://www.facebook.com/yerrmak");
   });
+
+  it("renders no video block when aboutVideoUrl is not set", async () => {
+    vi.doMock("@/lib/content/queries", () => ({
+      getProfile: vi.fn().mockResolvedValue(baseProfile),
+    }));
+    vi.resetModules();
+    const { default: FreshAboutPage } = await import("@/app/[locale]/about/page");
+    const element = await FreshAboutPage({ params: Promise.resolve({ locale: "en" }) });
+    render(element);
+
+    expect(screen.queryByRole("button", { name: /play video/i })).not.toBeInTheDocument();
+  });
+
+  it("renders the video presentation player when aboutVideoUrl is set", async () => {
+    vi.doMock("@/lib/content/queries", () => ({
+      getProfile: vi.fn().mockResolvedValue({
+        ...baseProfile,
+        aboutVideoUrl: "https://youtu.be/y8wpTiXLE-w",
+      }),
+    }));
+    vi.resetModules();
+    const { default: FreshAboutPage } = await import("@/app/[locale]/about/page");
+    const element = await FreshAboutPage({ params: Promise.resolve({ locale: "en" }) });
+    render(element);
+
+    expect(screen.getByRole("button", { name: /play video/i })).toBeInTheDocument();
+  });
 });
