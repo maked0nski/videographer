@@ -13,7 +13,12 @@ export default defineType({
       description: "Opened by the homepage hero's showreel button.",
       validation: (r) => r.required(),
     }),
-    defineField({ name: "contactCtaText", title: "Contact CTA text", type: "localeString" }),
+    defineField({
+      name: "contactCtaText",
+      title: "Contact CTA text",
+      type: "localeString",
+      description: "Heading shown above the \"Get in touch\" button on the homepage (e.g. \"Let's create something\").",
+    }),
     defineField({
       name: "seoTitle",
       title: "SEO title",
