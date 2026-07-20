@@ -46,6 +46,18 @@ export default defineType({
       type: "url",
       validation: (r) => r.required(),
     }),
+    defineField({
+      name: "linkedinUrl",
+      title: "LinkedIn URL",
+      type: "url",
+      description: "Optional — the LinkedIn icon only appears on the site once this is filled in.",
+    }),
+    defineField({
+      name: "facebookUrl",
+      title: "Facebook URL",
+      type: "url",
+      description: "Optional — the Facebook icon only appears on the site once this is filled in.",
+    }),
   ],
   preview: {
     select: { title: "name" },

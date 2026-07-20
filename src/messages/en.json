@@ -45,7 +45,9 @@
     "contactHeading": "Get in touch",
     "email": "Email",
     "instagram": "Instagram",
-    "youtube": "YouTube"
+    "youtube": "YouTube",
+    "linkedin": "LinkedIn",
+    "facebook": "Facebook"
   },
   "video": {
     "closeModal": "Close video"
