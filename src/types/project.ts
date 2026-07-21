@@ -1,5 +1,6 @@
 import type { Localized } from "./locale";
 import type { ImageAsset } from "./image";
+import type { StillItem } from "./gallery";
 
 export type ProjectType = "video" | "photo";
 
@@ -18,8 +19,14 @@ export interface Project {
   youtubeUrl?: string;
   /** Muted looping preview shown before Play is clicked; video projects only. */
   previewClipUrl?: string;
-  /** Behind-the-scenes set for video projects; primary gallery for photo projects. */
-  gallery?: ImageAsset[];
+  /** Color-graded highlight stills; video projects only. */
+  filmStills?: ImageAsset[];
+  /** Mixed photos/looping clips documenting the shoot; video projects only. */
+  behindTheScenes?: StillItem[];
+  /** Primary gallery; photo projects only. */
+  photoGallery?: ImageAsset[];
+  camera?: string;
+  lenses?: string;
   order: number;
   featured: boolean;
   published: boolean;
@@ -62,7 +69,11 @@ export interface ResolvedProject {
   coverImage: ImageAsset;
   youtubeUrl?: string;
   previewClipUrl?: string;
-  gallery?: ImageAsset[];
+  filmStills?: ImageAsset[];
+  behindTheScenes?: StillItem[];
+  photoGallery?: ImageAsset[];
+  camera?: string;
+  lenses?: string;
   order: number;
   featured: boolean;
 }

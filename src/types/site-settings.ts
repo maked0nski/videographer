@@ -30,6 +30,10 @@ export interface SiteSettings {
   recognitionFieldLabel: Localized<string>;
   aboutPageHeading: Localized<string>;
   aboutContactHeading: Localized<string>;
+  filmStillsHeading: Localized<string>;
+  cameraFieldLabel: Localized<string>;
+  lensesFieldLabel: Localized<string>;
+  galleryDefaultDisplayCount: number;
 }
 
 /** Locale-resolved shape handed to components. */
@@ -62,4 +66,8 @@ export interface ResolvedSiteSettings {
   recognitionFieldLabel: string;
   aboutPageHeading: string;
   aboutContactHeading: string;
+  filmStillsHeading: string;
+  cameraFieldLabel: string;
+  lensesFieldLabel: string;
+  galleryDefaultDisplayCount: number;
 }
