@@ -68,6 +68,18 @@ export default defineType({
       description: 'e.g. "Director of Photography".',
     }),
     defineField({
+      name: "camera",
+      title: "Camera",
+      type: "string",
+      description: 'e.g. "ARRI Alexa Mini" or "RED V-Raptor". Optional.',
+    }),
+    defineField({
+      name: "lenses",
+      title: "Lenses",
+      type: "string",
+      description: 'e.g. "Cooke Anamorphic/i SF". Optional.',
+    }),
+    defineField({
       name: "producerDirector",
       title: "Producer / Director",
       type: "localeString",
@@ -112,10 +124,8 @@ export default defineType({
       hidden: ({ document }) => document?.type !== "video",
     }),
     defineField({
-      name: "gallery",
-      title: "Gallery",
-      description:
-        "Primary gallery for Photo projects (required); optional behind-the-scenes set for Video projects.",
+      name: "filmStills",
+      title: "Film Stills Gallery",
       type: "array",
       of: [
         {
@@ -124,6 +134,38 @@ export default defineType({
           fields: [{ name: "alt", title: "Alt text", type: "string" }],
         },
       ],
+      description:
+        "Color-graded highlight stills from the finished film. No hard limit, but 4–6 is the recommended range. Video projects only.",
+      hidden: ({ document }) => document?.type !== "video",
+    }),
+    defineField({
+      name: "behindTheScenes",
+      title: "Behind the Scenes",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+          fields: [{ name: "alt", title: "Alt text", type: "string" }],
+        },
+        { type: "btsVideoClip" },
+      ],
+      description:
+        "Production stills and/or short looping video clips documenting the process on set — mix them in any order. Video projects only.",
+      hidden: ({ document }) => document?.type !== "video",
+    }),
+    defineField({
+      name: "photoGallery",
+      title: "Photo Gallery",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+          fields: [{ name: "alt", title: "Alt text", type: "string" }],
+        },
+      ],
+      description: "Full-resolution photos for this photography project.",
       validation: (rule) =>
         rule.custom((value, context) => {
           const doc = context.document as { type?: string } | undefined;
@@ -132,6 +174,7 @@ export default defineType({
           }
           return true;
         }),
+      hidden: ({ document }) => document?.type !== "photo",
     }),
     defineField({
       name: "order",
