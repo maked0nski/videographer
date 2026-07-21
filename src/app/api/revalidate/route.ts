@@ -10,19 +10,36 @@ interface SanityWebhookPayload {
   slug?: { current: string };
 }
 
-function pathsFor(payload: SanityWebhookPayload): string[] {
+interface RevalidationEntry {
+  path: string;
+  type?: "layout" | "page";
+}
+
+/**
+ * `siteSettings` drives nav/footer labels in the shared `[locale]` layout
+ * plus headings on the work/about/project pages — not just the homepage —
+ * so it revalidates the whole locale subtree via the `"layout"` type rather
+ * than a fixed list of literal paths (next/cache revalidatePath docs:
+ * layout-type revalidation cascades to every nested page).
+ */
+function entriesFor(payload: SanityWebhookPayload): RevalidationEntry[] {
   switch (payload._type) {
     case "project": {
-      const paths = LOCALES.flatMap((locale) => [`/${locale}`, `/${locale}/work`]);
+      const entries = LOCALES.flatMap((locale) => [
+        { path: `/${locale}` },
+        { path: `/${locale}/work` },
+      ]);
       if (payload.slug?.current) {
-        paths.push(...LOCALES.map((locale) => `/${locale}/work/${payload.slug!.current}`));
+        entries.push(
+          ...LOCALES.map((locale) => ({ path: `/${locale}/work/${payload.slug!.current}` })),
+        );
       }
-      return paths;
+      return entries;
     }
     case "profile":
-      return LOCALES.flatMap((locale) => [`/${locale}/about`, `/${locale}`]);
+      return LOCALES.flatMap((locale) => [{ path: `/${locale}/about` }, { path: `/${locale}` }]);
     case "siteSettings":
-      return LOCALES.map((locale) => `/${locale}`);
+      return LOCALES.map((locale) => ({ path: `/${locale}`, type: "layout" as const }));
     default:
       return [];
   }
@@ -45,15 +62,15 @@ export async function POST(request: NextRequest) {
   }
 
   const payload = JSON.parse(body) as SanityWebhookPayload;
-  const paths = pathsFor(payload);
+  const entries = entriesFor(payload);
 
-  if (paths.length === 0) {
+  if (entries.length === 0) {
     return NextResponse.json({ revalidated: false });
   }
 
-  for (const path of paths) {
-    revalidatePath(path);
+  for (const entry of entries) {
+    revalidatePath(entry.path, entry.type);
   }
 
-  return NextResponse.json({ revalidated: true, paths });
+  return NextResponse.json({ revalidated: true, paths: entries.map((entry) => entry.path) });
 }

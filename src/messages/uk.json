@@ -1,48 +1,17 @@
 {
   "nav": {
-    "home": "Головна",
-    "work": "Роботи",
-    "about": "Про мене й контакти",
     "menu": "Меню",
     "close": "Закрити"
-  },
-  "footer": {
-    "rights": "Усі права захищені."
   },
   "common": {
     "languageSwitcher": "Змінити мову",
     "skipToContent": "Перейти до вмісту"
   },
-  "home": {
-    "watchShowreel": "Дивитись шоуріл",
-    "selectedWork": "Вибрані роботи",
-    "viewAllWork": "Усі роботи",
-    "photography": "Фотографія",
-    "viewPhotography": "Переглянути фотографії",
-    "contactHeading": "Створімо щось разом",
-    "contactCta": "Зв'язатися"
-  },
-  "work": {
-    "heading": "Роботи",
-    "filterAll": "Усі",
-    "filterFilms": "Фільми",
-    "filterPhotography": "Фотографія"
-  },
   "project": {
-    "behindTheScenes": "Закадрові кадри",
     "gallery": "Галерея",
-    "previousProject": "Попередній проєкт",
-    "nextProject": "Наступний проєкт",
-    "playVideo": "Відтворити відео",
-    "year": "Рік",
-    "location": "Локація",
-    "role": "Роль",
-    "producerDirector": "Продюсер / Режисер",
-    "recognition": "Визнання"
+    "playVideo": "Відтворити відео"
   },
   "about": {
-    "heading": "Про мене й контакти",
-    "contactHeading": "Зв'язатися",
     "email": "Email",
     "instagram": "Instagram",
     "youtube": "YouTube",

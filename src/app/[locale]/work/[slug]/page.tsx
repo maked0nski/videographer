@@ -3,7 +3,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import type { Locale } from "@/types";
 import { isLocale, getMessages, localizedAlternates } from "@/lib/i18n";
-import { getAdjacentProjects, getProjectBySlug } from "@/lib/content/queries";
+import { getAdjacentProjects, getProjectBySlug, getSiteSettings } from "@/lib/content/queries";
 import { ProjectMeta } from "@/components/portfolio/ProjectMeta";
 import { PrevNextNav } from "@/components/portfolio/PrevNextNav";
 import { PhotoGallery } from "@/components/media/PhotoGallery";
@@ -42,7 +42,10 @@ export default async function ProjectPage({
   const { locale, project } = await loadProject(rawLocale, slug);
 
   const t = getMessages(locale);
-  const adjacent = await getAdjacentProjects(project.order, locale);
+  const [siteSettings, adjacent] = await Promise.all([
+    getSiteSettings(locale),
+    getAdjacentProjects(project.order, locale),
+  ]);
 
   const lightboxLabels = {
     close: t.lightbox.close,
@@ -78,18 +81,18 @@ export default async function ProjectPage({
         <ProjectMeta
           project={project}
           labels={{
-            year: t.project.year,
-            location: t.project.location,
-            role: t.project.role,
-            producerDirector: t.project.producerDirector,
-            recognition: t.project.recognition,
+            year: siteSettings.yearFieldLabel,
+            location: siteSettings.locationFieldLabel,
+            role: siteSettings.roleFieldLabel,
+            producerDirector: siteSettings.producerDirectorFieldLabel,
+            recognition: siteSettings.recognitionFieldLabel,
           }}
         />
       </div>
 
       {project.type === "video" && project.gallery && project.gallery.length > 0 && (
         <div className="mt-16">
-          <h2 className="text-xl font-semibold">{t.project.behindTheScenes}</h2>
+          <h2 className="text-xl font-semibold">{siteSettings.behindTheScenesHeading}</h2>
           <div className="mt-6">
             <PhotoGallery images={project.gallery} lightboxLabels={lightboxLabels} />
           </div>
@@ -106,7 +109,7 @@ export default async function ProjectPage({
       <PrevNextNav
         adjacent={adjacent}
         locale={locale}
-        labels={{ previous: t.project.previousProject, next: t.project.nextProject }}
+        labels={{ previous: siteSettings.previousProjectLabel, next: siteSettings.nextProjectLabel }}
       />
     </div>
   );

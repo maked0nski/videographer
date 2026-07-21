@@ -36,7 +36,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <div className="mt-8">
             <ShowreelButton
               showreelUrl={siteSettings.showreelUrl}
-              label={t.home.watchShowreel}
+              label={siteSettings.watchShowreelLabel}
               closeLabel={t.video.closeModal}
             />
           </div>
@@ -45,9 +45,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="flex items-baseline justify-between">
-          <h2 className="text-2xl font-semibold">{t.home.selectedWork}</h2>
+          <h2 className="text-2xl font-semibold">{siteSettings.selectedWorkHeading}</h2>
           <ButtonLink href={localePath(locale, "/work")} variant="ghost">
-            {t.home.viewAllWork}
+            {siteSettings.viewAllWorkLabel}
           </ButtonLink>
         </div>
         <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2">
@@ -60,11 +60,15 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <PhotographyPreview
         projects={allProjects}
         locale={locale}
-        heading={t.home.photography}
-        cta={t.home.viewPhotography}
+        heading={siteSettings.photographyHeading}
+        cta={siteSettings.viewPhotographyLabel}
       />
 
-      <ContactCta locale={locale} heading={t.home.contactHeading} cta={t.home.contactCta} />
+      <ContactCta
+        locale={locale}
+        heading={siteSettings.contactCtaText}
+        cta={siteSettings.contactCtaButtonLabel}
+      />
     </div>
   );
 }

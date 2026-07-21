@@ -52,7 +52,7 @@ export default async function LocaleLayout({
   if (!isLocale(rawLocale)) notFound();
   const locale: Locale = rawLocale;
 
-  const profile = await getProfile(locale);
+  const [profile, siteSettings] = await Promise.all([getProfile(locale), getSiteSettings(locale)]);
   const t = getMessages(locale);
 
   return (
@@ -64,11 +64,29 @@ export default async function LocaleLayout({
       >
         {t.common.skipToContent}
       </a>
-      <Header locale={locale} brandName={profile.name} />
+      <Header
+        locale={locale}
+        brandName={profile.name}
+        navLabels={{
+          work: siteSettings.navWorkLabel,
+          about: siteSettings.navAboutLabel,
+        }}
+        languageSwitcherLabel={t.common.languageSwitcher}
+        menuLabels={{ open: t.nav.menu, close: t.nav.close }}
+      />
       <main id="main-content" className="flex-1">
         {children}
       </main>
-      <Footer locale={locale} brandName={profile.name} />
+      <Footer
+        locale={locale}
+        brandName={profile.name}
+        rightsText={siteSettings.footerRightsText}
+        navLabels={{
+          home: siteSettings.navHomeLabel,
+          work: siteSettings.navWorkLabel,
+          about: siteSettings.navAboutLabel,
+        }}
+      />
       <Analytics />
     </div>
   );

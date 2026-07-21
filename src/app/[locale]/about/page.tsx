@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import type { Locale } from "@/types";
 import { isLocale, getMessages, localizedAlternates } from "@/lib/i18n";
-import { getProfile } from "@/lib/content/queries";
+import { getProfile, getSiteSettings } from "@/lib/content/queries";
 import { SocialLinks } from "@/components/about/SocialLinks";
 import { HeroVideoPlayer } from "@/components/media/HeroVideoPlayer";
 
@@ -22,8 +22,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale: rawLocale } = await params;
   const locale: Locale = isLocale(rawLocale) ? rawLocale : "en";
-  const t = getMessages(locale);
-  return { title: t.about.heading, alternates: { languages: localizedAlternates("/about") } };
+  const siteSettings = await getSiteSettings(locale);
+  return {
+    title: siteSettings.aboutPageHeading,
+    alternates: { languages: localizedAlternates("/about") },
+  };
 }
 
 /**
@@ -36,11 +39,11 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const locale: Locale = rawLocale;
 
   const t = getMessages(locale);
-  const profile = await getProfile(locale);
+  const [profile, siteSettings] = await Promise.all([getProfile(locale), getSiteSettings(locale)]);
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-16">
-      <h1 className="text-3xl font-semibold sm:text-4xl">{t.about.heading}</h1>
+      <h1 className="text-3xl font-semibold sm:text-4xl">{siteSettings.aboutPageHeading}</h1>
 
       <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-[360px_1fr]">
         <div className="sm:sticky sm:top-24 sm:self-start">
@@ -71,7 +74,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       )}
 
       <div id="contact" className="border-border mt-12 border-t pt-8">
-        <h2 className="text-xl font-semibold">{t.about.contactHeading}</h2>
+        <h2 className="text-xl font-semibold">{siteSettings.aboutContactHeading}</h2>
         <div className="mt-6">
           <SocialLinks
             profile={profile}

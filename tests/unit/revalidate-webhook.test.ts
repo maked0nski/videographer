@@ -79,7 +79,7 @@ describe("POST /api/revalidate", () => {
     expect(json.paths).toEqual(expect.arrayContaining(["/uk/about", "/en/about", "/uk", "/en"]));
   });
 
-  it("revalidates only home paths for a siteSettings change", async () => {
+  it("revalidates the whole locale subtree (layout-type) for a siteSettings change", async () => {
     isValidSignatureMock.mockResolvedValue(true);
 
     const response = await callRoute(
@@ -89,6 +89,8 @@ describe("POST /api/revalidate", () => {
     const json = await response.json();
 
     expect(json.paths.sort()).toEqual(["/en", "/uk"]);
+    expect(revalidatePathMock).toHaveBeenCalledWith("/en", "layout");
+    expect(revalidatePathMock).toHaveBeenCalledWith("/uk", "layout");
   });
 
   it("responds 200 with revalidated:false for an unrecognized type", async () => {

@@ -20,10 +20,16 @@ const baseProfile = {
   youtubeUrl: "https://www.youtube.com/@yerrmak",
 };
 
+const baseSiteSettings = {
+  aboutPageHeading: "About & Contact",
+  aboutContactHeading: "Get in touch",
+};
+
 describe("About & Contact page", () => {
   it("renders icon links for email/Instagram/YouTube and never a form, with LinkedIn/Facebook omitted when not set", async () => {
     vi.doMock("@/lib/content/queries", () => ({
       getProfile: vi.fn().mockResolvedValue(baseProfile),
+      getSiteSettings: vi.fn().mockResolvedValue(baseSiteSettings),
     }));
     vi.resetModules();
     const { default: FreshAboutPage } = await import("@/app/[locale]/about/page");
@@ -53,6 +59,7 @@ describe("About & Contact page", () => {
         linkedinUrl: "https://www.linkedin.com/in/yerrmak",
         facebookUrl: "https://www.facebook.com/yerrmak",
       }),
+      getSiteSettings: vi.fn().mockResolvedValue(baseSiteSettings),
     }));
     vi.resetModules();
     const { default: FreshAboutPage } = await import("@/app/[locale]/about/page");
@@ -69,6 +76,7 @@ describe("About & Contact page", () => {
   it("renders no video block when aboutVideoUrl is not set", async () => {
     vi.doMock("@/lib/content/queries", () => ({
       getProfile: vi.fn().mockResolvedValue(baseProfile),
+      getSiteSettings: vi.fn().mockResolvedValue(baseSiteSettings),
     }));
     vi.resetModules();
     const { default: FreshAboutPage } = await import("@/app/[locale]/about/page");
@@ -84,6 +92,7 @@ describe("About & Contact page", () => {
         ...baseProfile,
         aboutVideoUrl: "https://youtu.be/y8wpTiXLE-w",
       }),
+      getSiteSettings: vi.fn().mockResolvedValue(baseSiteSettings),
     }));
     vi.resetModules();
     const { default: FreshAboutPage } = await import("@/app/[locale]/about/page");

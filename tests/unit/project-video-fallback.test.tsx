@@ -24,6 +24,16 @@ const baseProject = {
 vi.mock("@/lib/content/queries", () => ({
   getProjectBySlug: vi.fn(),
   getAdjacentProjects: vi.fn().mockResolvedValue({ previous: null, next: null }),
+  getSiteSettings: vi.fn().mockResolvedValue({
+    yearFieldLabel: "Year",
+    locationFieldLabel: "Location",
+    roleFieldLabel: "Role",
+    producerDirectorFieldLabel: "Producer / Director",
+    recognitionFieldLabel: "Recognition",
+    behindTheScenesHeading: "Behind the Scenes",
+    previousProjectLabel: "Previous project",
+    nextProjectLabel: "Next project",
+  }),
 }));
 
 describe("Project detail page — video without youtubeUrl", () => {

@@ -55,9 +55,33 @@ interface SanityProfileDoc {
 
 interface SanitySiteSettingsDoc {
   showreelUrl: string;
-  contactCtaText: Localized<string>;
+  contactCtaText?: Localized<string>;
   seoTitle?: Localized<string>;
   seoDescription?: Localized<string>;
+  navHomeLabel?: Localized<string>;
+  navWorkLabel?: Localized<string>;
+  navAboutLabel?: Localized<string>;
+  footerRightsText?: Localized<string>;
+  watchShowreelLabel?: Localized<string>;
+  selectedWorkHeading?: Localized<string>;
+  viewAllWorkLabel?: Localized<string>;
+  photographyHeading?: Localized<string>;
+  viewPhotographyLabel?: Localized<string>;
+  contactCtaButtonLabel?: Localized<string>;
+  workPageHeading?: Localized<string>;
+  filterAllLabel?: Localized<string>;
+  filterFilmsLabel?: Localized<string>;
+  filterPhotographyLabel?: Localized<string>;
+  behindTheScenesHeading?: Localized<string>;
+  previousProjectLabel?: Localized<string>;
+  nextProjectLabel?: Localized<string>;
+  yearFieldLabel?: Localized<string>;
+  locationFieldLabel?: Localized<string>;
+  roleFieldLabel?: Localized<string>;
+  producerDirectorFieldLabel?: Localized<string>;
+  recognitionFieldLabel?: Localized<string>;
+  aboutPageHeading?: Localized<string>;
+  aboutContactHeading?: Localized<string>;
 }
 
 const PROJECT_LIST_PROJECTION = `{
@@ -193,5 +217,29 @@ export async function getSiteSettings(locale: Locale): Promise<ResolvedSiteSetti
     contactCtaText: resolveLocalized(doc.contactCtaText, locale) ?? "",
     seoTitle: resolveLocalized(doc.seoTitle, locale),
     seoDescription: resolveLocalized(doc.seoDescription, locale),
+    navHomeLabel: resolveLocalized(doc.navHomeLabel, locale) ?? "",
+    navWorkLabel: resolveLocalized(doc.navWorkLabel, locale) ?? "",
+    navAboutLabel: resolveLocalized(doc.navAboutLabel, locale) ?? "",
+    footerRightsText: resolveLocalized(doc.footerRightsText, locale) ?? "",
+    watchShowreelLabel: resolveLocalized(doc.watchShowreelLabel, locale) ?? "",
+    selectedWorkHeading: resolveLocalized(doc.selectedWorkHeading, locale) ?? "",
+    viewAllWorkLabel: resolveLocalized(doc.viewAllWorkLabel, locale) ?? "",
+    photographyHeading: resolveLocalized(doc.photographyHeading, locale) ?? "",
+    viewPhotographyLabel: resolveLocalized(doc.viewPhotographyLabel, locale) ?? "",
+    contactCtaButtonLabel: resolveLocalized(doc.contactCtaButtonLabel, locale) ?? "",
+    workPageHeading: resolveLocalized(doc.workPageHeading, locale) ?? "",
+    filterAllLabel: resolveLocalized(doc.filterAllLabel, locale) ?? "",
+    filterFilmsLabel: resolveLocalized(doc.filterFilmsLabel, locale) ?? "",
+    filterPhotographyLabel: resolveLocalized(doc.filterPhotographyLabel, locale) ?? "",
+    behindTheScenesHeading: resolveLocalized(doc.behindTheScenesHeading, locale) ?? "",
+    previousProjectLabel: resolveLocalized(doc.previousProjectLabel, locale) ?? "",
+    nextProjectLabel: resolveLocalized(doc.nextProjectLabel, locale) ?? "",
+    yearFieldLabel: resolveLocalized(doc.yearFieldLabel, locale) ?? "",
+    locationFieldLabel: resolveLocalized(doc.locationFieldLabel, locale) ?? "",
+    roleFieldLabel: resolveLocalized(doc.roleFieldLabel, locale) ?? "",
+    producerDirectorFieldLabel: resolveLocalized(doc.producerDirectorFieldLabel, locale) ?? "",
+    recognitionFieldLabel: resolveLocalized(doc.recognitionFieldLabel, locale) ?? "",
+    aboutPageHeading: resolveLocalized(doc.aboutPageHeading, locale) ?? "",
+    aboutContactHeading: resolveLocalized(doc.aboutContactHeading, locale) ?? "",
   };
 }

@@ -1,48 +1,17 @@
 {
   "nav": {
-    "home": "Home",
-    "work": "Work",
-    "about": "About & Contact",
     "menu": "Menu",
     "close": "Close"
-  },
-  "footer": {
-    "rights": "All rights reserved."
   },
   "common": {
     "languageSwitcher": "Switch language",
     "skipToContent": "Skip to content"
   },
-  "home": {
-    "watchShowreel": "Watch Showreel",
-    "selectedWork": "Selected Work",
-    "viewAllWork": "View all work",
-    "photography": "Photography",
-    "viewPhotography": "View photography",
-    "contactHeading": "Let's create something",
-    "contactCta": "Get in touch"
-  },
-  "work": {
-    "heading": "Work",
-    "filterAll": "All",
-    "filterFilms": "Films",
-    "filterPhotography": "Photography"
-  },
   "project": {
-    "behindTheScenes": "Behind the Scenes",
     "gallery": "Gallery",
-    "previousProject": "Previous project",
-    "nextProject": "Next project",
-    "playVideo": "Play video",
-    "year": "Year",
-    "location": "Location",
-    "role": "Role",
-    "producerDirector": "Producer / Director",
-    "recognition": "Recognition"
+    "playVideo": "Play video"
   },
   "about": {
-    "heading": "About & Contact",
-    "contactHeading": "Get in touch",
     "email": "Email",
     "instagram": "Instagram",
     "youtube": "YouTube",
