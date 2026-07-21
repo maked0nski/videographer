@@ -89,7 +89,7 @@ const PROJECT_LIST_PROJECTION = `{
   type,
   title,
   year,
-  coverImage,
+  coverImage{..., asset->{_id, metadata{dimensions}}},
   featured
 }`;
 
@@ -103,7 +103,7 @@ const PROJECT_FULL_PROJECTION = `{
   producerDirector,
   recognition,
   description,
-  coverImage,
+  coverImage{..., asset->{_id, metadata{dimensions}}},
   youtubeUrl,
   "previewClipUrl": previewClip.asset->url,
   gallery,
@@ -168,7 +168,7 @@ export async function getAdjacentProjects(
   const docs = await sanityClient.fetch<
     Pick<SanityProjectDoc, "slug" | "title" | "coverImage" | "order">[]
   >(
-    `*[_type == "project" && published == true] | order(order asc) { "slug": slug.current, title, coverImage, order }`,
+    `*[_type == "project" && published == true] | order(order asc) { "slug": slug.current, title, coverImage{..., asset->{_id, metadata{dimensions}}}, order }`,
   );
 
   if (docs.length <= 1) return { previous: null, next: null };
@@ -192,7 +192,11 @@ export async function getAdjacentProjects(
 }
 
 export async function getProfile(locale: Locale): Promise<ResolvedProfile> {
-  const doc = await sanityClient.fetch<SanityProfileDoc>(`*[_id == "profile"][0]`);
+  // `asset->` dereference is required to get real width/height — a bare
+  // image field only returns {_ref, _type} (see queries.ts PROJECT_*_PROJECTION).
+  const doc = await sanityClient.fetch<SanityProfileDoc>(
+    `*[_id == "profile"][0]{..., portrait{..., asset->{_id, metadata{dimensions}}}}`,
+  );
 
   return {
     name: doc.name,
