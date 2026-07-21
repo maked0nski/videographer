@@ -180,6 +180,8 @@ export async function getProjectBySlug(
     year: doc.year,
     location: doc.location,
     role: resolveLocalized(doc.role, locale) ?? "",
+    camera: doc.camera,
+    lenses: doc.lenses,
     producerDirector: resolveLocalized(doc.producerDirector, locale),
     recognition: resolveLocalized(doc.recognition, locale),
     description: resolveLocalized(doc.description, locale) ?? "",
