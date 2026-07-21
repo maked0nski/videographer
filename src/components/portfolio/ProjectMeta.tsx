@@ -11,8 +11,9 @@ function MetaRow({ label, value }: { label: string; value?: string }) {
 }
 
 /**
- * Optional fields (producerDirector, recognition, location) are simply
- * omitted when absent — never rendered empty (FR-010, spec Edge Cases).
+ * Optional fields (location, producerDirector, recognition, camera, lenses)
+ * are simply omitted when absent — never rendered empty (FR-010, spec Edge
+ * Cases).
  */
 export function ProjectMeta({
   project,
@@ -25,6 +26,8 @@ export function ProjectMeta({
     role: string;
     producerDirector: string;
     recognition: string;
+    camera: string;
+    lenses: string;
   };
 }) {
   return (
@@ -37,6 +40,8 @@ export function ProjectMeta({
         <MetaRow label={labels.role} value={project.role} />
         <MetaRow label={labels.producerDirector} value={project.producerDirector} />
         <MetaRow label={labels.recognition} value={project.recognition} />
+        <MetaRow label={labels.camera} value={project.camera} />
+        <MetaRow label={labels.lenses} value={project.lenses} />
       </dl>
     </div>
   );

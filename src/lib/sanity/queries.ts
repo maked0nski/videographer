@@ -8,6 +8,7 @@ import type {
   ResolvedProfile,
   ResolvedProject,
   ResolvedSiteSettings,
+  StillItem,
 } from "@/types";
 import { resolveLocalized } from "@/lib/i18n";
 import { sanityClient } from "./client";
@@ -28,15 +29,27 @@ interface SanityProjectDoc {
   year: string;
   location?: string;
   role: Localized<string>;
+  camera?: string;
+  lenses?: string;
   producerDirector?: Localized<string>;
   recognition?: Localized<string>;
   description: Localized<string>;
   coverImage: SanityImageRef;
   youtubeUrl?: string;
   previewClipUrl?: string;
-  gallery?: SanityImageRef[];
+  filmStills?: SanityImageRef[];
+  behindTheScenes?: SanityBtsRawItem[];
+  photoGallery?: SanityImageRef[];
   order: number;
   featured: boolean;
+}
+
+interface SanityBtsRawItem {
+  _type: string;
+  alt?: string;
+  asset?: { metadata?: { dimensions?: { width: number; height: number } } };
+  orientation?: "landscape" | "portrait";
+  fileUrl?: string;
 }
 
 interface SanityProfileDoc {
@@ -82,6 +95,10 @@ interface SanitySiteSettingsDoc {
   recognitionFieldLabel?: Localized<string>;
   aboutPageHeading?: Localized<string>;
   aboutContactHeading?: Localized<string>;
+  galleryDefaultDisplayCount?: number;
+  filmStillsHeading?: Localized<string>;
+  cameraFieldLabel?: Localized<string>;
+  lensesFieldLabel?: Localized<string>;
 }
 
 const PROJECT_LIST_PROJECTION = `{
@@ -89,7 +106,7 @@ const PROJECT_LIST_PROJECTION = `{
   type,
   title,
   year,
-  coverImage,
+  coverImage{..., asset->{_id, metadata{dimensions}}},
   featured
 }`;
 
@@ -100,16 +117,38 @@ const PROJECT_FULL_PROJECTION = `{
   year,
   location,
   role,
+  camera,
+  lenses,
   producerDirector,
   recognition,
   description,
-  coverImage,
+  coverImage{..., asset->{_id, metadata{dimensions}}},
   youtubeUrl,
   "previewClipUrl": previewClip.asset->url,
-  gallery,
+  "filmStills": filmStills[]{..., asset->{_id, metadata{dimensions}}},
+  "behindTheScenes": behindTheScenes[]{
+    _type,
+    alt,
+    "asset": asset->{_id, metadata{dimensions}},
+    orientation,
+    "fileUrl": file.asset->url
+  },
+  "photoGallery": photoGallery[]{..., asset->{_id, metadata{dimensions}}},
   order,
   featured
 }`;
+
+function toStillItems(raw: SanityBtsRawItem[] | undefined): StillItem[] {
+  if (!raw) return [];
+  return raw
+    .filter((entry) => entry._type !== "btsVideoClip" || Boolean(entry.fileUrl))
+    .map((entry) => {
+      if (entry._type === "btsVideoClip") {
+        return { kind: "video" as const, url: entry.fileUrl as string, orientation: entry.orientation ?? "landscape" };
+      }
+      return { kind: "image" as const, image: toImageAsset(entry as unknown as SanityImageRef) };
+    });
+}
 
 export async function getAllProjects(locale: Locale): Promise<ProjectListItem[]> {
   const docs = await sanityClient.fetch<SanityProjectDoc[]>(
@@ -143,13 +182,17 @@ export async function getProjectBySlug(
     year: doc.year,
     location: doc.location,
     role: resolveLocalized(doc.role, locale) ?? "",
+    camera: doc.camera,
+    lenses: doc.lenses,
     producerDirector: resolveLocalized(doc.producerDirector, locale),
     recognition: resolveLocalized(doc.recognition, locale),
     description: resolveLocalized(doc.description, locale) ?? "",
     coverImage: toImageAsset(doc.coverImage),
     youtubeUrl: doc.youtubeUrl,
     previewClipUrl: doc.previewClipUrl,
-    gallery: doc.gallery?.map((image) => toImageAsset(image)),
+    filmStills: doc.filmStills?.map((image) => toImageAsset(image)),
+    behindTheScenes: toStillItems(doc.behindTheScenes),
+    photoGallery: doc.photoGallery?.map((image) => toImageAsset(image)),
     order: doc.order,
     featured: doc.featured,
   };
@@ -168,7 +211,7 @@ export async function getAdjacentProjects(
   const docs = await sanityClient.fetch<
     Pick<SanityProjectDoc, "slug" | "title" | "coverImage" | "order">[]
   >(
-    `*[_type == "project" && published == true] | order(order asc) { "slug": slug.current, title, coverImage, order }`,
+    `*[_type == "project" && published == true] | order(order asc) { "slug": slug.current, title, coverImage{..., asset->{_id, metadata{dimensions}}}, order }`,
   );
 
   if (docs.length <= 1) return { previous: null, next: null };
@@ -192,7 +235,11 @@ export async function getAdjacentProjects(
 }
 
 export async function getProfile(locale: Locale): Promise<ResolvedProfile> {
-  const doc = await sanityClient.fetch<SanityProfileDoc>(`*[_id == "profile"][0]`);
+  // `asset->` dereference is required to get real width/height — a bare
+  // image field only returns {_ref, _type} (see queries.ts PROJECT_*_PROJECTION).
+  const doc = await sanityClient.fetch<SanityProfileDoc>(
+    `*[_id == "profile"][0]{..., portrait{..., asset->{_id, metadata{dimensions}}}}`,
+  );
 
   return {
     name: doc.name,
@@ -241,5 +288,9 @@ export async function getSiteSettings(locale: Locale): Promise<ResolvedSiteSetti
     recognitionFieldLabel: resolveLocalized(doc.recognitionFieldLabel, locale) ?? "",
     aboutPageHeading: resolveLocalized(doc.aboutPageHeading, locale) ?? "",
     aboutContactHeading: resolveLocalized(doc.aboutContactHeading, locale) ?? "",
+    galleryDefaultDisplayCount: doc.galleryDefaultDisplayCount ?? 8,
+    filmStillsHeading: resolveLocalized(doc.filmStillsHeading, locale) ?? "",
+    cameraFieldLabel: resolveLocalized(doc.cameraFieldLabel, locale) ?? "",
+    lensesFieldLabel: resolveLocalized(doc.lensesFieldLabel, locale) ?? "",
   };
 }

@@ -52,7 +52,11 @@ export async function getProjectBySlug(
     coverImage: project.coverImage,
     youtubeUrl: project.youtubeUrl,
     previewClipUrl: project.previewClipUrl,
-    gallery: project.gallery,
+    camera: project.camera,
+    lenses: project.lenses,
+    filmStills: project.filmStills,
+    behindTheScenes: project.behindTheScenes,
+    photoGallery: project.photoGallery,
     order: project.order,
     featured: project.featured,
   };
@@ -129,5 +133,9 @@ export async function getSiteSettings(locale: Locale): Promise<ResolvedSiteSetti
     recognitionFieldLabel: resolveLocalized(siteSettings.recognitionFieldLabel, locale) ?? "",
     aboutPageHeading: resolveLocalized(siteSettings.aboutPageHeading, locale) ?? "",
     aboutContactHeading: resolveLocalized(siteSettings.aboutContactHeading, locale) ?? "",
+    galleryDefaultDisplayCount: siteSettings.galleryDefaultDisplayCount,
+    filmStillsHeading: resolveLocalized(siteSettings.filmStillsHeading, locale) ?? "",
+    cameraFieldLabel: resolveLocalized(siteSettings.cameraFieldLabel, locale) ?? "",
+    lensesFieldLabel: resolveLocalized(siteSettings.lensesFieldLabel, locale) ?? "",
   };
 }

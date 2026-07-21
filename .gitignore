@@ -53,3 +53,6 @@ next-env.d.ts
 .claude/settings.local.json
 /info/data/
 
+# superpowers brainstorming visual-companion mockups (local scratch, not repo content)
+/.superpowers/
+

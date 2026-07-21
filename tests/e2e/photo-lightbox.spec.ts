@@ -5,7 +5,7 @@ test.describe("Photo lightbox", () => {
   test("opens from the gallery, navigates next/previous, and closes both ways", async ({
     page,
   }) => {
-    await page.goto("/en/work/coastal-frames");
+    await page.goto("/en/work/scales-photoshoot");
 
     const thumbnails = page.locator("main button").filter({ has: page.locator("img") });
     await thumbnails.first().click();

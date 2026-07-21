@@ -12,6 +12,7 @@ export default defineType({
     { name: "work", title: "Work page" },
     { name: "project", title: "Project page" },
     { name: "about", title: "About page" },
+    { name: "gallery", title: "Galleries" },
   ],
   fields: [
     defineField({
@@ -179,6 +180,34 @@ export default defineType({
       title: "\"Recognition\" field label",
       type: "localeString",
       group: "project",
+    }),
+    defineField({
+      name: "filmStillsHeading",
+      title: "\"Film Stills\" section heading",
+      type: "localeString",
+      group: "project",
+    }),
+    defineField({
+      name: "cameraFieldLabel",
+      title: "\"Camera\" field label",
+      type: "localeString",
+      group: "project",
+    }),
+    defineField({
+      name: "lensesFieldLabel",
+      title: "\"Lenses\" field label",
+      type: "localeString",
+      group: "project",
+    }),
+    defineField({
+      name: "galleryDefaultDisplayCount",
+      title: "Default gallery display count",
+      type: "number",
+      description:
+        "How many items the Film Stills / Photo Gallery / Behind the Scenes grid shows before the rest move into the scrollable filmstrip below it.",
+      initialValue: 8,
+      validation: (rule) => rule.required().integer().min(1),
+      group: "gallery",
     }),
 
     defineField({

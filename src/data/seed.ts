@@ -44,9 +44,17 @@ export const projects: Project[] = [
     },
     coverImage: image("/projects/the-withshaw-case/cover.jpg", "The Withshaw Case", 1551, 1081),
     // No public release yet — festival run still in progress, so no YouTube link.
-    gallery: [
-      image("/projects/the-withshaw-case/bts-1.svg", "Behind the scenes 1", 1600, 1000),
-      image("/projects/the-withshaw-case/bts-2.svg", "Behind the scenes 2", 1600, 1000),
+    camera: "ARRI Alexa Mini",
+    lenses: "Sigma Cine Primes",
+    behindTheScenes: [
+      {
+        kind: "image",
+        image: image("/projects/the-withshaw-case/bts-1.svg", "Behind the scenes 1", 1600, 1000),
+      },
+      {
+        kind: "image",
+        image: image("/projects/the-withshaw-case/bts-2.svg", "Behind the scenes 2", 1600, 1000),
+      },
     ],
     order: 1,
     featured: true,
@@ -150,9 +158,11 @@ export const projects: Project[] = [
     },
     coverImage: image("/projects/yara-steel/cover.jpg", "YARA — Steel", 1920, 1075),
     youtubeUrl: "https://www.youtube.com/watch?v=ScGBGBQLPQI",
-    gallery: [
-      image("/projects/yara-steel/bts-1.svg", "Behind the scenes 1", 1600, 1000),
-      image("/projects/yara-steel/bts-2.svg", "Behind the scenes 2", 1600, 1000),
+    camera: "RED V-Raptor",
+    lenses: "Cooke Anamorphic/i SF",
+    behindTheScenes: [
+      { kind: "image", image: image("/projects/yara-steel/bts-1.svg", "Behind the scenes 1", 1600, 1000) },
+      { kind: "image", image: image("/projects/yara-steel/bts-2.svg", "Behind the scenes 2", 1600, 1000) },
     ],
     order: 6,
     featured: true,
@@ -174,7 +184,7 @@ export const projects: Project[] = [
       uk: "Невелика добірка прибережної та пейзажної фотографії.",
     },
     coverImage: image("/projects/coastal-frames/cover.svg", "Coastal Frames cover", 1600, 1000),
-    gallery: [
+    photoGallery: [
       image("/projects/coastal-frames/photo-1.svg", "Coastal Frames photo 1", 1400, 1750),
       image("/projects/coastal-frames/photo-2.svg", "Coastal Frames photo 2", 1400, 1750),
       image("/projects/coastal-frames/photo-3.svg", "Coastal Frames photo 3", 1400, 1750),
@@ -248,4 +258,8 @@ export const siteSettings: SiteSettings = {
   recognitionFieldLabel: { en: "Recognition", uk: "Визнання" },
   aboutPageHeading: { en: "About & Contact", uk: "Про мене й контакти" },
   aboutContactHeading: { en: "Get in touch", uk: "Зв'язатися" },
+  galleryDefaultDisplayCount: 8,
+  filmStillsHeading: { en: "Film Stills", uk: "Кадри фільму" },
+  cameraFieldLabel: { en: "Camera", uk: "Камера" },
+  lensesFieldLabel: { en: "Lenses", uk: "Об'єктиви" },
 };
