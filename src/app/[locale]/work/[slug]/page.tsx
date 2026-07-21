@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import type { Metadata } from "next";
-import type { Locale } from "@/types";
+import type { Locale, StillItem } from "@/types";
 import { isLocale, getMessages, localizedAlternates } from "@/lib/i18n";
 import { getAdjacentProjects, getProjectBySlug, getSiteSettings } from "@/lib/content/queries";
 import { ProjectMeta } from "@/components/portfolio/ProjectMeta";
 import { PrevNextNav } from "@/components/portfolio/PrevNextNav";
-import { PhotoGallery } from "@/components/media/PhotoGallery";
+import { ClusteredStillsGrid } from "@/components/media/ClusteredStillsGrid";
 import { HeroVideoPlayer } from "@/components/media/HeroVideoPlayer";
 
 async function loadProject(rawLocale: string, slug: string) {
@@ -53,6 +53,15 @@ export default async function ProjectPage({
     previous: t.lightbox.previous,
   };
 
+  const filmStillItems: StillItem[] = (project.filmStills ?? []).map((image) => ({
+    kind: "image",
+    image,
+  }));
+  const photoGalleryItems: StillItem[] = (project.photoGallery ?? []).map((image) => ({
+    kind: "image",
+    image,
+  }));
+
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
       {project.type === "video" && project.youtubeUrl && (
@@ -86,23 +95,46 @@ export default async function ProjectPage({
             role: siteSettings.roleFieldLabel,
             producerDirector: siteSettings.producerDirectorFieldLabel,
             recognition: siteSettings.recognitionFieldLabel,
+            camera: siteSettings.cameraFieldLabel,
+            lenses: siteSettings.lensesFieldLabel,
           }}
         />
       </div>
 
-      {project.type === "video" && project.gallery && project.gallery.length > 0 && (
+      {project.type === "video" && filmStillItems.length > 0 && (
         <div className="mt-16">
-          <h2 className="text-xl font-semibold">{siteSettings.behindTheScenesHeading}</h2>
+          <h2 className="text-xl font-semibold">{siteSettings.filmStillsHeading}</h2>
           <div className="mt-6">
-            <PhotoGallery images={project.gallery} lightboxLabels={lightboxLabels} />
+            <ClusteredStillsGrid
+              items={filmStillItems}
+              defaultDisplayCount={siteSettings.galleryDefaultDisplayCount}
+              lightboxLabels={lightboxLabels}
+            />
           </div>
         </div>
       )}
 
-      {project.type === "photo" && project.gallery && project.gallery.length > 0 && (
+      {project.type === "video" && project.behindTheScenes && project.behindTheScenes.length > 0 && (
+        <div className="mt-16">
+          <h2 className="text-xl font-semibold">{siteSettings.behindTheScenesHeading}</h2>
+          <div className="mt-6">
+            <ClusteredStillsGrid
+              items={project.behindTheScenes}
+              defaultDisplayCount={siteSettings.galleryDefaultDisplayCount}
+              lightboxLabels={lightboxLabels}
+            />
+          </div>
+        </div>
+      )}
+
+      {project.type === "photo" && photoGalleryItems.length > 0 && (
         <div className="mt-4">
           <h2 className="sr-only">{t.project.gallery}</h2>
-          <PhotoGallery images={project.gallery} lightboxLabels={lightboxLabels} />
+          <ClusteredStillsGrid
+            items={photoGalleryItems}
+            defaultDisplayCount={siteSettings.galleryDefaultDisplayCount}
+            lightboxLabels={lightboxLabels}
+          />
         </div>
       )}
 

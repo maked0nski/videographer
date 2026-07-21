@@ -30,9 +30,13 @@ vi.mock("@/lib/content/queries", () => ({
     roleFieldLabel: "Role",
     producerDirectorFieldLabel: "Producer / Director",
     recognitionFieldLabel: "Recognition",
+    cameraFieldLabel: "Camera",
+    lensesFieldLabel: "Lenses",
     behindTheScenesHeading: "Behind the Scenes",
+    filmStillsHeading: "Film Stills",
     previousProjectLabel: "Previous project",
     nextProjectLabel: "Next project",
+    galleryDefaultDisplayCount: 8,
   }),
 }));
 
