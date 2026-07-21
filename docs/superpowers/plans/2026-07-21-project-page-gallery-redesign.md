@@ -639,7 +639,7 @@ Add to `interface ResolvedSiteSettings` (after `aboutContactHeading`):
 npm run typecheck
 ```
 
-Expected: errors only in `src/lib/sanity/queries.ts`, `src/lib/content/seed-queries.ts`, `src/data/seed.ts` (about the removed `gallery` field and the new required `SiteSettings` fields). No errors anywhere else. If you see errors elsewhere, stop and investigate before continuing.
+Expected: errors in `src/lib/sanity/queries.ts`, `src/lib/content/seed-queries.ts`, `src/data/seed.ts` (about the removed `gallery` field and the new required `SiteSettings` fields), **and also** `src/app/[locale]/work/[slug]/page.tsx` (it still reads `project.gallery` directly — Task 9 is where that page gets rewired to the new fields, not this task). No errors anywhere else. If you see errors in a fifth file, stop and investigate before continuing.
 
 - [ ] **Step 6: Commit**
 
@@ -1028,7 +1028,7 @@ Expected: PASS, 3 tests.
 npm run typecheck
 ```
 
-Expected: same three pre-existing failing files as after Task 4 (`queries.ts`, `seed-queries.ts`, `seed.ts`) — no new errors from this component.
+Expected: same four pre-existing failing files as after Task 4 (`queries.ts`, `seed-queries.ts`, `seed.ts`, `work/[slug]/page.tsx`) — no new errors from this component.
 
 - [ ] **Step 6: Commit**
 
@@ -1418,7 +1418,7 @@ npm run typecheck
 npx vitest run
 ```
 
-Expected: both fully clean now (this was the task that fixed the three files flagged since Task 4). No test file changes were needed in this task.
+Expected: `vitest run` fully clean. `typecheck` still shows exactly one remaining error, in `src/app/[locale]/work/[slug]/page.tsx` (it still reads `project.gallery` directly) — that's fixed in Task 9, not here. No test file changes were needed in this task.
 
 - [ ] **Step 6: Commit**
 
