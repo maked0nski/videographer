@@ -140,12 +140,14 @@ const PROJECT_FULL_PROJECTION = `{
 
 function toStillItems(raw: SanityBtsRawItem[] | undefined): StillItem[] {
   if (!raw) return [];
-  return raw.map((entry) => {
-    if (entry._type === "btsVideoClip") {
-      return { kind: "video" as const, url: entry.fileUrl ?? "", orientation: entry.orientation ?? "landscape" };
-    }
-    return { kind: "image" as const, image: toImageAsset(entry as unknown as SanityImageRef) };
-  });
+  return raw
+    .filter((entry) => entry._type !== "btsVideoClip" || Boolean(entry.fileUrl))
+    .map((entry) => {
+      if (entry._type === "btsVideoClip") {
+        return { kind: "video" as const, url: entry.fileUrl as string, orientation: entry.orientation ?? "landscape" };
+      }
+      return { kind: "image" as const, image: toImageAsset(entry as unknown as SanityImageRef) };
+    });
 }
 
 export async function getAllProjects(locale: Locale): Promise<ProjectListItem[]> {
