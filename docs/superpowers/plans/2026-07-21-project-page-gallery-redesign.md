@@ -505,7 +505,7 @@ Expected output: one `Migrated <id>: gallery -> <field> (N items)` line per proj
 curl -sG "https://u7x92ycv.api.sanity.io/v2026-01-01/data/query/production" --data-urlencode 'query=*[_type=="project"]{"slug":slug.current, type, "hasOldGallery": defined(gallery), "photoGalleryCount": count(photoGallery), "btsCount": count(behindTheScenes)}'
 ```
 
-Expected: `"hasOldGallery": false` for every project; `the-withshaw-case` and `yara-steel` show `"btsCount": 2`; `scales-photoshoot` shows `"photoGalleryCount": 10`.
+Expected: `"hasOldGallery": false` for every project that currently has one (as of this writing: `scales-photoshoot` → `"photoGalleryCount": 10`, `the-withshaw-case` → `"btsCount": 9`, `fusion-fever` → `"btsCount": 8`; `yara-steel` has no `gallery` field live today, so it's simply absent from the pre-migration query and unaffected). If your query returns different projects or counts than these, trust the live data over this example — the migration script queries `defined(gallery)` dynamically and splits by each project's actual `type`, so it is correct regardless of which projects currently hold gallery content.
 
 ```bash
 curl -sG "https://u7x92ycv.api.sanity.io/v2026-01-01/data/query/production" --data-urlencode 'query=*[_id=="siteSettings"][0]{galleryDefaultDisplayCount, filmStillsHeading, cameraFieldLabel, lensesFieldLabel}'
@@ -1682,13 +1682,13 @@ git commit -m "feat: wire Film Stills / Photo Gallery / BTS sections into the pr
 npm run dev
 ```
 
-- [ ] **Step 2: Check a video project with BTS + gear fields**
+- [ ] **Step 2: Check a video project with BTS content**
 
 ```bash
-curl -s http://localhost:3000/en/work/yara-steel | grep -oE '<dt[^>]*>[^<]*</dt>|<dd[^>]*>[^<]*</dd>|<h2[^>]*>[^<]*</h2>'
+curl -s http://localhost:3000/en/work/the-withshaw-case | grep -oE '<dt[^>]*>[^<]*</dt>|<dd[^>]*>[^<]*</dd>|<h2[^>]*>[^<]*</h2>'
 ```
 
-Expected: `Camera`/`RED V-Raptor` and `Lenses`/`Cooke Anamorphic/i SF` rows are present (once you've filled them in via Studio — the migration script does not add gear values, only field labels; add real values for at least one live project to verify end-to-end), and a "Behind the Scenes" heading with 2 items rendering.
+Expected: a "Behind the Scenes" heading is present (this project has 9 migrated items live, per Task 3's verification). `Camera`/`Lenses` rows will NOT appear yet — the migration script only adds the new *field labels* to `siteSettings`, not gear *values* on any project — that's expected until you fill in `camera`/`lenses` for a project in Studio. Do that for at least one project now and re-run this curl to confirm the rows appear once populated.
 
 - [ ] **Step 3: Check the photo project with 10 images (default count 8)**
 
