@@ -52,4 +52,30 @@ describe("ClusteredStillsGrid", () => {
     expect(video.autoplay).toBe(true);
     expect(video.closest("button")).toBeNull();
   });
+
+  it("floors a lone portrait row's height so it's never taller than wide, and centers it", () => {
+    const items = [image("wide", 1920, 1080), image("tall", 800, 1600)];
+    const { container } = render(
+      <ClusteredStillsGrid items={items} defaultDisplayCount={8} lightboxLabels={labels} />,
+    );
+
+    const rowWrappers = container.querySelectorAll(":scope > div > div.flex.justify-center");
+    expect(rowWrappers).toHaveLength(1);
+
+    const row = rowWrappers[0].querySelector(":scope > div.flex.gap-2") as HTMLElement;
+    expect(row.style.height).toBe("calc((100cqw - 8px) / max(1, 2.2777777777777777))");
+    expect(row.style.width).toBe(
+      "calc((100cqw - 8px) / max(1, 2.2777777777777777) * 2.2777777777777777 + 8px)",
+    );
+  });
+
+  it("centers the overflow filmstrip instead of left-aligning it", () => {
+    const items = Array.from({ length: 3 }, (_, i) => image(`still-${i}`));
+    const { container } = render(
+      <ClusteredStillsGrid items={items} defaultDisplayCount={1} lightboxLabels={labels} />,
+    );
+
+    const filmstrip = container.querySelector(".overflow-x-auto") as HTMLElement;
+    expect(filmstrip).toHaveClass("justify-center");
+  });
 });
