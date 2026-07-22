@@ -96,12 +96,16 @@ export function ClusteredStillsGrid({
       {rows.map((row, rowIndex) => {
         const sumAspectRatio = row.items.reduce((sum, item) => sum + item.aspectRatio, 0);
         const totalGapPx = ROW_GAP_PX * (row.items.length - 1);
+        const availableWidth = `(100cqw - ${totalGapPx}px)`;
+        const rowHeight = `calc(${availableWidth} / max(1, ${sumAspectRatio}))`;
+        const rowWidth = `calc(${availableWidth} / max(1, ${sumAspectRatio}) * ${sumAspectRatio} + ${totalGapPx}px)`;
         return (
-          <div key={rowIndex} className="mb-2" style={{ containerType: "inline-size" }}>
-            <div
-              className="flex gap-2"
-              style={{ height: `calc((100cqw - ${totalGapPx}px) / ${sumAspectRatio})` }}
-            >
+          <div
+            key={rowIndex}
+            className="mb-2 flex justify-center"
+            style={{ containerType: "inline-size" }}
+          >
+            <div className="flex gap-2" style={{ height: rowHeight, width: rowWidth }}>
               {row.items.map(({ itemIndex, aspectRatio }) => (
                 <div key={itemIndex} style={{ flexGrow: aspectRatio, flexShrink: 1, flexBasis: 0 }}>
                   {renderTile(items[itemIndex], itemIndex, "h-full w-full")}
@@ -113,7 +117,7 @@ export function ClusteredStillsGrid({
       })}
 
       {overflowItems.length > 0 && (
-        <div className="border-border mt-4 flex gap-2 overflow-x-auto border-t border-dashed pt-3">
+        <div className="border-border mt-4 flex justify-center gap-2 overflow-x-auto border-t border-dashed pt-3">
           {overflowItems.map((item, offset) =>
             renderTile(item, defaultDisplayCount + offset, "h-16 w-16 flex-shrink-0", "64px"),
           )}

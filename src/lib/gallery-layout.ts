@@ -19,10 +19,83 @@ export interface StillRow {
 }
 
 /**
+ * Chunk sizes for one same-orientation run. Landscape runs chunk greedily —
+ * a trailing remainder under `maxChunk` is fine, since a lone landscape item
+ * is never taller than it is wide and reads as an intentional wide/cinematic
+ * single-row treatment. Portrait runs balance chunk sizes instead: a lone
+ * *trailing* portrait item would render far taller than wide, so balancing
+ * ensures no chunk (other than a whole run of exactly 1, handled separately
+ * by `mergeOrphanRows`) is ever left at size 1.
+ */
+function chunkSizes(runLength: number, maxChunk: number, balanced: boolean): number[] {
+  if (!balanced) {
+    const sizes: number[] = [];
+    let remaining = runLength;
+    while (remaining > 0) {
+      const size = Math.min(maxChunk, remaining);
+      sizes.push(size);
+      remaining -= size;
+    }
+    return sizes;
+  }
+
+  const numChunks = Math.ceil(runLength / maxChunk);
+  const base = Math.floor(runLength / numChunks);
+  const extra = runLength % numChunks;
+  return Array.from({ length: numChunks }, (_, i) => (i < extra ? base + 1 : base));
+}
+
+function rowCapacity(row: StillRow): number {
+  return row.orientation === "portrait" ? PORTRAIT_ROW_SIZE : LANDSCAPE_ROW_SIZE;
+}
+
+/**
+ * A lone portrait item left as its own row renders far taller than wide (its
+ * width fills the full container, so height = containerWidth / aspectRatio
+ * with aspectRatio well under 1 — confirmed live on `the-withshaw-case`'s
+ * Behind the Scenes section, docs/superpowers/specs/2026-07-22-gallery-orphan-row-fix-design.md).
+ * Merge it into whichever neighboring row has room instead — preferring the
+ * next row, then the previous one — so it shares a row's height rather than
+ * getting a full-bleed row of its own. Landscape orphans are left alone: a
+ * lone landscape item is never taller than it is wide, so it's a fine
+ * intentional "hero" row as-is.
+ */
+function mergeOrphanRows(rows: StillRow[]): StillRow[] {
+  const result = rows.map((row) => ({ orientation: row.orientation, items: [...row.items] }));
+
+  for (let i = 0; i < result.length; i += 1) {
+    const row = result[i];
+    const isOrphan = row.items.length === 1 && row.orientation === "portrait";
+    if (!isOrphan) continue;
+
+    const next = result[i + 1];
+    if (next && next.items.length < rowCapacity(next)) {
+      next.items = [...row.items, ...next.items];
+      result.splice(i, 1);
+      i -= 1;
+      continue;
+    }
+
+    const previous = result[i - 1];
+    if (previous && previous.items.length < rowCapacity(previous)) {
+      previous.items = [...previous.items, ...row.items];
+      result.splice(i, 1);
+      i -= 1;
+    }
+  }
+
+  return result;
+}
+
+/**
  * Groups items into same-orientation rows without reordering them — runs of
  * consecutive portrait items become rows of up to 4, runs of consecutive
- * landscape items become rows of up to 2. This is the "banded justified
- * grid" from docs/superpowers/specs/2026-07-21-project-page-gallery-redesign-design.md.
+ * landscape items become rows of up to 2, then any isolated single-item
+ * portrait row is merged into a neighboring row (see `mergeOrphanRows`).
+ * This is the "banded justified grid" from
+ * docs/superpowers/specs/2026-07-21-project-page-gallery-redesign-design.md,
+ * extended by the orphan-row fix from
+ * docs/superpowers/specs/2026-07-22-gallery-orphan-row-fix-design.md.
  */
 export function groupIntoRows(items: StillItem[]): StillRow[] {
   const rows: StillRow[] = [];
@@ -35,10 +108,11 @@ export function groupIntoRows(items: StillItem[]): StillRow[] {
       runEnd += 1;
     }
 
-    const chunkSize = orientation === "portrait" ? PORTRAIT_ROW_SIZE : LANDSCAPE_ROW_SIZE;
+    const maxChunk = orientation === "portrait" ? PORTRAIT_ROW_SIZE : LANDSCAPE_ROW_SIZE;
+    const sizes = chunkSizes(runEnd - runStart, maxChunk, orientation === "portrait");
     let chunkStart = runStart;
-    while (chunkStart < runEnd) {
-      const chunkEnd = Math.min(chunkStart + chunkSize, runEnd);
+    for (const size of sizes) {
+      const chunkEnd = chunkStart + size;
       const rowItems: StillRow["items"] = [];
       for (let itemIndex = chunkStart; itemIndex < chunkEnd; itemIndex += 1) {
         rowItems.push({ itemIndex, aspectRatio: itemAspectRatio(items[itemIndex]) });
@@ -50,5 +124,5 @@ export function groupIntoRows(items: StillItem[]): StillRow[] {
     runStart = runEnd;
   }
 
-  return rows;
+  return mergeOrphanRows(rows);
 }
