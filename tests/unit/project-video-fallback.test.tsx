@@ -17,7 +17,7 @@ const baseProject = {
   role: "Cinematographer",
   description: "A thriller-drama.",
   coverImage: { url: "/cover.jpg", alt: "The Withshaw Case cover", width: 1600, height: 1000 },
-  order: 1,
+  order: "1",
   featured: true,
 };
 

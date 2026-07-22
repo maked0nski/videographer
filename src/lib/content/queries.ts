@@ -39,10 +39,10 @@ export async function getProjectBySlug(
 }
 
 export async function getAdjacentProjects(
-  order: number,
+  slug: string,
   locale: Locale,
 ): Promise<AdjacentProjects> {
-  return (await loadImpl()).getAdjacentProjects(order, locale);
+  return (await loadImpl()).getAdjacentProjects(slug, locale);
 }
 
 export async function getProfile(locale: Locale): Promise<ResolvedProfile> {

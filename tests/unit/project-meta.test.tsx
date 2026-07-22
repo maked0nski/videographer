@@ -10,7 +10,7 @@ const baseProject = {
   role: "Cinematographer",
   description: "A test project.",
   coverImage: { url: "/cover.jpg", alt: "Cover", width: 1600, height: 1000 },
-  order: 1,
+  order: "1",
   featured: false,
 };
 

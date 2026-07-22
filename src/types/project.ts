@@ -27,7 +27,8 @@ export interface Project {
   photoGallery?: ImageAsset[];
   camera?: string;
   lenses?: string;
-  order: number;
+  /** Sortable rank string (LexoRank), not a display number — orders ascending as a plain string compare. */
+  order: string;
   featured: boolean;
   published: boolean;
 }
@@ -74,6 +75,6 @@ export interface ResolvedProject {
   photoGallery?: ImageAsset[];
   camera?: string;
   lenses?: string;
-  order: number;
+  order: string;
   featured: boolean;
 }

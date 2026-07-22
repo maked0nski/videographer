@@ -40,7 +40,7 @@ interface SanityProjectDoc {
   filmStills?: SanityImageRef[];
   behindTheScenes?: SanityBtsRawItem[];
   photoGallery?: SanityImageRef[];
-  order: number;
+  orderRank: string;
   featured: boolean;
 }
 
@@ -134,7 +134,7 @@ const PROJECT_FULL_PROJECTION = `{
     "fileUrl": file.asset->url
   },
   "photoGallery": photoGallery[]{..., asset->{_id, metadata{dimensions}}},
-  order,
+  orderRank,
   featured
 }`;
 
@@ -152,7 +152,7 @@ function toStillItems(raw: SanityBtsRawItem[] | undefined): StillItem[] {
 
 export async function getAllProjects(locale: Locale): Promise<ProjectListItem[]> {
   const docs = await sanityClient.fetch<SanityProjectDoc[]>(
-    `*[_type == "project" && published == true] | order(order asc) ${PROJECT_LIST_PROJECTION}`,
+    `*[_type == "project" && published == true] | order(orderRank asc) ${PROJECT_LIST_PROJECTION}`,
   );
 
   return docs.map((doc) => ({
@@ -193,7 +193,7 @@ export async function getProjectBySlug(
     filmStills: doc.filmStills?.map((image) => toImageAsset(image)),
     behindTheScenes: toStillItems(doc.behindTheScenes),
     photoGallery: doc.photoGallery?.map((image) => toImageAsset(image)),
-    order: doc.order,
+    order: doc.orderRank,
     featured: doc.featured,
   };
 }
@@ -203,20 +203,27 @@ export async function getProjectBySlug(
  * null }` for exactly one (data-model.md, contracts/groq-queries.md) — same
  * rule as the seed-backed implementation, computed here from the ordered
  * slug/title/coverImage list rather than a stored relationship.
+ *
+ * Looked up by slug rather than `orderRank`: `orderRank` is now unique by
+ * construction (@sanity/orderable-document-list), but slug is still the more
+ * direct key — an `orderRank`-based lookup previously broke when two
+ * projects shared an order value (a plain numeric `order` field editors
+ * could duplicate by hand), so this stays keyed on the thing that's always
+ * unique.
  */
 export async function getAdjacentProjects(
-  order: number,
+  slug: string,
   locale: Locale,
 ): Promise<AdjacentProjects> {
   const docs = await sanityClient.fetch<
-    Pick<SanityProjectDoc, "slug" | "title" | "coverImage" | "order">[]
+    Pick<SanityProjectDoc, "slug" | "title" | "coverImage" | "orderRank">[]
   >(
-    `*[_type == "project" && published == true] | order(order asc) { "slug": slug.current, title, coverImage{..., asset->{_id, metadata{dimensions}}}, order }`,
+    `*[_type == "project" && published == true] | order(orderRank asc) { "slug": slug.current, title, coverImage{..., asset->{_id, metadata{dimensions}}}, orderRank }`,
   );
 
   if (docs.length <= 1) return { previous: null, next: null };
 
-  const index = docs.findIndex((doc) => doc.order === order);
+  const index = docs.findIndex((doc) => doc.slug === slug);
   if (index === -1) return { previous: null, next: null };
 
   const toSummary = (doc: (typeof docs)[number]): ProjectSummary => ({
