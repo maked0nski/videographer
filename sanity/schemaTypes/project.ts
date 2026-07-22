@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { orderRankField, orderRankOrdering } from "@sanity/orderable-document-list";
 
 /**
  * A single `type` field (Video/Photo) drives which of the fields below are
@@ -176,13 +177,7 @@ export default defineType({
         }),
       hidden: ({ document }) => document?.type !== "photo",
     }),
-    defineField({
-      name: "order",
-      title: "Order",
-      type: "number",
-      description: "Drives Work list order, homepage Selected Work order, and prev/next sequence.",
-      validation: (rule) => rule.required().integer(),
-    }),
+    orderRankField({ type: "project" }),
     defineField({
       name: "featured",
       title: "Featured on homepage",
@@ -198,13 +193,7 @@ export default defineType({
       initialValue: false,
     }),
   ],
-  orderings: [
-    {
-      title: "Display order",
-      name: "orderAsc",
-      by: [{ field: "order", direction: "asc" }],
-    },
-  ],
+  orderings: [orderRankOrdering],
   preview: {
     select: { title: "title.en", titleUk: "title.uk", type: "type", media: "coverImage" },
     prepare({ title, titleUk, type, media }) {

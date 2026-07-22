@@ -18,7 +18,9 @@ import { resolveLocalized } from "@/lib/i18n";
  */
 
 function publishedProjectsByOrder() {
-  return projects.filter((project) => project.published).sort((a, b) => a.order - b.order);
+  return projects
+    .filter((project) => project.published)
+    .sort((a, b) => a.order.localeCompare(b.order, undefined, { numeric: true }));
 }
 
 export async function getAllProjects(locale: Locale): Promise<ProjectListItem[]> {
@@ -63,13 +65,13 @@ export async function getProjectBySlug(
 }
 
 export async function getAdjacentProjects(
-  order: number,
+  slug: string,
   locale: Locale,
 ): Promise<AdjacentProjects> {
   const list = publishedProjectsByOrder();
   if (list.length <= 1) return { previous: null, next: null };
 
-  const index = list.findIndex((project) => project.order === order);
+  const index = list.findIndex((project) => project.slug === slug);
   if (index === -1) return { previous: null, next: null };
 
   const toSummary = (project: (typeof list)[number]): ProjectSummary => ({

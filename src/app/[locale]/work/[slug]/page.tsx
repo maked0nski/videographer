@@ -44,7 +44,7 @@ export default async function ProjectPage({
   const t = getMessages(locale);
   const [siteSettings, adjacent] = await Promise.all([
     getSiteSettings(locale),
-    getAdjacentProjects(project.order, locale),
+    getAdjacentProjects(slug, locale),
   ]);
 
   const lightboxLabels = {

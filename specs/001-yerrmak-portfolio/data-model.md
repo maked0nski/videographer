@@ -34,7 +34,7 @@ constitution "single Type choice" requirement; FR-009 through FR-015).
 | `coverImage` | Sanity image | yes | Used on `ProjectCard` and as page hero image |
 | `youtubeUrl` | string (URL) | required when `type = "video"`; hidden/unused when `type = "photo"` | Studio conditional field; validated as a YouTube URL |
 | `gallery` | Sanity image[] | required (≥1) when `type = "photo"` (primary gallery); optional when `type = "video"` (behind-the-scenes set) | |
-| `order` | integer | yes | Drives Work-page list order, homepage Selected Work order, and prev/next sequence (FR-013) |
+| `order` | string (LexoRank via `orderRank`) | yes | Drives Work-page list order, homepage Selected Work order, and prev/next sequence (FR-013). Hidden/read-only in Studio — set only by dragging in the Projects list (@sanity/orderable-document-list), never typed |
 | `featured` | boolean | yes, default `false` | Whether shown in the homepage Selected Work preview (FR-005) |
 | `published` | boolean | yes, default `false` | Gates visibility on the live site independent of Sanity's draft system; unpublished/missing slugs resolve to the not-found state (spec Edge Cases) |
 
@@ -52,8 +52,11 @@ constitution "single Type choice" requirement; FR-009 through FR-015).
 - `producerDirector` and `recognition`, when empty/absent, cause the frontend to omit
   the corresponding label+value entirely (spec Edge Cases) — never render an empty
   field.
-- `order` need not be globally unique; ties are broken by `_createdAt` for a stable
-  sort.
+- `order` (backed by the `orderRank` field) is globally unique by construction — it's
+  a LexoRank string assigned by drag-and-drop reordering, not a number editors type in,
+  so duplicate/colliding values are structurally impossible (unlike the plain integer
+  `order` field this replaced, where two projects sharing a value broke prev/next
+  navigation).
 
 **Derived/computed (not stored)**:
 
