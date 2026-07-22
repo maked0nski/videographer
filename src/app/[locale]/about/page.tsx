@@ -42,20 +42,18 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const [profile, siteSettings] = await Promise.all([getProfile(locale), getSiteSettings(locale)]);
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-16">
+    <div className="mx-auto max-w-6xl px-6 py-16">
       <h1 className="text-3xl font-semibold sm:text-4xl">{siteSettings.aboutPageHeading}</h1>
 
-      <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-[360px_1fr]">
-        <div className="sm:sticky sm:top-24 sm:self-start">
-          <div className="bg-bg-secondary relative aspect-[4/5] overflow-hidden">
-            <Image
-              src={profile.portrait.url}
-              alt={profile.portrait.alt}
-              fill
-              sizes="360px"
-              className="object-cover"
-            />
-          </div>
+      <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-[480px_1fr]">
+        <div className="bg-bg-secondary relative aspect-[4/5] overflow-hidden">
+          <Image
+            src={profile.portrait.url}
+            alt={profile.portrait.alt}
+            fill
+            sizes="(min-width: 640px) 480px, 100vw"
+            className="object-cover"
+          />
         </div>
 
         <p className="text-text-secondary text-lg leading-relaxed whitespace-pre-line">
