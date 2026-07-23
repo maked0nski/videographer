@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "menu": "Меню",
+    "close": "Закрити"
+  },
+  "common": {
+    "languageSwitcher": "Змінити мову",
+    "skipToContent": "Перейти до вмісту"
+  },
+  "project": {
+    "gallery": "Галерея",
+    "playVideo": "Відтворити відео"
+  },
+  "about": {
+    "email": "Email",
+    "instagram": "Instagram",
+    "youtube": "YouTube",
+    "linkedin": "LinkedIn",
+    "facebook": "Facebook"
+  },
+  "video": {
+    "closeModal": "Закрити відео"
+  },
+  "lightbox": {
+    "close": "Закрити галерею",
+    "next": "Наступне фото",
+    "previous": "Попереднє фото"
+  }
+}

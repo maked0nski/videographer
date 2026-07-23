@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "menu": "Menu",
+    "close": "Close"
+  },
+  "common": {
+    "languageSwitcher": "Switch language",
+    "skipToContent": "Skip to content"
+  },
+  "project": {
+    "gallery": "Gallery",
+    "playVideo": "Play video"
+  },
+  "about": {
+    "email": "Email",
+    "instagram": "Instagram",
+    "youtube": "YouTube",
+    "linkedin": "LinkedIn",
+    "facebook": "Facebook"
+  },
+  "video": {
+    "closeModal": "Close video"
+  },
+  "lightbox": {
+    "close": "Close gallery",
+    "next": "Next image",
+    "previous": "Previous image"
+  }
+}
