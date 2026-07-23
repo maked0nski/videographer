@@ -1,12 +1,12 @@
 import { test, expect } from "@playwright/test";
 
 /**
- * SC-003: the Work page's All/Films/Photography filters always show a
- * project count and set that exactly matches each project's `type`, with
- * zero mismatched or miscategorized items.
+ * The Work page's All/Films/Photography filters always show a project count
+ * and set that exactly matches each project's `type`, with zero mismatched
+ * or miscategorized items.
  */
 test.describe("Work filter", () => {
-  test("All/Films/Photography counts match seed project types", async ({ page }) => {
+  test("All/Films/Photography counts match project types", async ({ page }) => {
     await page.goto("/en/work");
 
     const cards = page.locator('main a[href*="/work/"]');

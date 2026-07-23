@@ -29,10 +29,8 @@ npm install
 npm run dev        # http://localhost:3000
 ```
 
-Without Sanity environment variables set, the site runs entirely on the seed
-content in `src/data/seed.ts` (`src/lib/content/queries.ts` auto-detects and
-falls back to it) — no Sanity project is required to develop or preview the
-public pages.
+A Sanity project is required — see [Environment variables](#environment-variables)
+and [Sanity Studio](#sanity-studio) below.
 
 ## Environment variables
 
@@ -41,7 +39,7 @@ Copy `.env.example` to `.env.local` and fill in as needed:
 | Variable | Purpose |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Public site URL used for metadataBase/OG/sitemap |
-| `NEXT_PUBLIC_SANITY_PROJECT_ID` | Sanity project ID (unset = seed content fallback) |
+| `NEXT_PUBLIC_SANITY_PROJECT_ID` | Sanity project ID (required) |
 | `NEXT_PUBLIC_SANITY_DATASET` | Sanity dataset name |
 | `NEXT_PUBLIC_SANITY_API_VERSION` | Sanity API version |
 | `SANITY_API_READ_TOKEN` | Only required if the dataset is private |
@@ -63,11 +61,8 @@ npm run test:e2e          # Playwright (starts a production build automatically)
 ## Sanity Studio
 
 The frontend and Studio schema are built into the app (`sanity/schemaTypes/`,
-`sanity/sanity.config.ts`, mounted at `/studio`). Once
-`NEXT_PUBLIC_SANITY_PROJECT_ID` is set, `src/lib/content/queries.ts`
-automatically reads from Sanity instead of the seed file — no code change
-needed. The `Profile` and `Site Settings` singletons plus project documents
-are managed from `/studio`.
+`sanity/sanity.config.ts`, mounted at `/studio`). The `Profile` and
+`Site Settings` singletons plus project documents are managed from `/studio`.
 
 ## Docker
 

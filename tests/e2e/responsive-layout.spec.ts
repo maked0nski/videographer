@@ -1,12 +1,12 @@
 import { test, expect } from "@playwright/test";
 
 /**
- * SC-009: no page has horizontal overflow or broken navigation, on mobile and
+ * No page has horizontal overflow or broken navigation, on mobile and
  * desktop viewports (this file runs under both the `desktop-chromium` and
  * `mobile-chromium` Playwright projects — see playwright.config.ts), for
  * every page and both locales.
  */
-const PAGES = ["/", "/work", "/work/the-withshaw-case", "/work/coastal-frames", "/about"];
+const PAGES = ["/", "/work", "/work/the-withshaw-case", "/work/scales-photoshoot", "/about"];
 const LOCALES = ["en", "uk"] as const;
 
 for (const locale of LOCALES) {

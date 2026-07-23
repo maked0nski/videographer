@@ -15,9 +15,7 @@ import { sanityClient } from "./client";
 import { toImageAsset } from "./image";
 
 /**
- * GROQ implementations matching `contracts/groq-queries.md` — same exported
- * signatures as `src/lib/content/queries.ts` (seed-backed), so that module
- * can swap to calling these with no component changes (tasks.md T052).
+ * GROQ implementations backing `src/lib/content/queries.ts`.
  */
 
 type SanityImageRef = Parameters<typeof toImageAsset>[0];
@@ -200,9 +198,8 @@ export async function getProjectBySlug(
 
 /**
  * Wraps around for 2+ published projects; returns `{ previous: null, next:
- * null }` for exactly one (data-model.md, contracts/groq-queries.md) — same
- * rule as the seed-backed implementation, computed here from the ordered
- * slug/title/coverImage list rather than a stored relationship.
+ * null }` for exactly one, computed here from the ordered slug/title/
+ * coverImage list rather than a stored relationship.
  *
  * Looked up by slug rather than `orderRank`: `orderRank` is now unique by
  * construction (@sanity/orderable-document-list), but slug is still the more

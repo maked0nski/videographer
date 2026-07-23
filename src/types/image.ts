@@ -1,7 +1,6 @@
 /**
- * CMS-agnostic image shape. The seed data layer and the Sanity data layer both
- * resolve to exactly this shape, so components never know or care which one is
- * behind `lib/content/queries.ts` (constitution Principle I).
+ * Image shape returned by `lib/content/queries.ts`, resolved from Sanity's
+ * asset reference.
  */
 export interface ImageAsset {
   url: string;
