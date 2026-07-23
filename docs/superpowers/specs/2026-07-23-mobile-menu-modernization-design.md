@@ -37,7 +37,11 @@ what gets rendered inside the portal.
      `role="dialog"` `aria-modal="true"` `aria-label={openLabel}`.
   3. `NavLinks` inside the card at `text-lg` (down from the old `text-2xl`,
      proportionate to a compact card rather than a full-screen menu),
-     `flex flex-col gap-2`; each link keeps `py-2` for a ≥44px tap target.
+     `flex flex-col gap-2`. `NavLinks.tsx`'s shared link className gains
+     `block py-2` (it currently has no vertical padding at all) so each link
+     reaches a ≥44px tap target; this is shared with the desktop nav too,
+     where the extra 8px of vertical padding on an already-taller header row
+     is not visually noticeable.
 - Closing happens on: the header toggle (X), a scrim click, `Escape`, or
   clicking any nav link (existing `onNavigate` behavior, unchanged).
 
@@ -47,16 +51,24 @@ The header's rendered height differs slightly between `uk`/`en` (different
 label lengths) and can reflow, so the card's `top` offset is measured at
 runtime rather than hard-coded:
 
-- `Header.tsx` adds `const headerRef = useRef<HTMLElement>(null)`, attaches
-  it to the `<header>` element, and passes `headerRef` down to `MobileMenu`.
-- `MobileMenu` accepts `headerRef` and, only while `isOpen`, observes it with
-  a `ResizeObserver` to read `headerRef.current.getBoundingClientRect().bottom`
-  into state, adding a small fixed gap (8px) on top for the card's `top`
-  style. The observer is created on open and disconnected on close — never
-  running while the menu is closed. (The header is the first element in the
-  page and `sticky top-0`, so its `top` is always `0`; only its `bottom`
-  — i.e. its height — can change, which `ResizeObserver` covers without
-  needing a scroll listener.)
+`Header.tsx` is currently a Server Component (no `"use client"`) — `MobileMenu`
+is the client boundary rendered inside it, matching the codebase's existing
+pattern of small leaf client components (`NavLinks`, `LanguageSwitcher`)
+inside a server-rendered `Header`. Rather than adding a ref in `Header.tsx`
+(which would force it to become a Client Component), `MobileMenu` finds its
+own ancestor header directly:
+
+- The toggle `<button>` already needs a ref for focus restoration; reuse that
+  ref (`triggerRef`) and call `triggerRef.current.closest("header")` once the
+  menu opens to get the header element — no new prop, no change to
+  `Header.tsx` at all.
+- Only while `isOpen`, observe that header element with a `ResizeObserver` to
+  read `getBoundingClientRect().bottom` into state, adding a small fixed gap
+  (8px) for the card's `top` style. The observer is created on open and
+  disconnected on close — never running while the menu is closed. (The
+  header is the first element on the page and `sticky top-0`, so its `top`
+  is always `0`; only its `bottom` — i.e. its height — can change, which
+  `ResizeObserver` covers without needing a scroll listener.)
 
 ## Reused accessibility primitives
 
@@ -85,13 +97,14 @@ here would be new complexity, not parity):
 ## Component/prop changes
 
 - `MobileMenu.tsx`: drops the `CloseButton` import (no longer used here —
-  it's untouched in `VideoModal`/`Lightbox`/elsewhere); adds `headerRef` prop;
-  adds the `ResizeObserver`-backed offset state; restructures the portaled
-  JSX into scrim + card as described above.
-- `Header.tsx`: adds `headerRef`, attaches it to `<header>`, passes it to
-  `MobileMenu`.
-- No prop/behavior changes to `NavLinks.tsx`, `CloseButton.tsx`, or any i18n
-  message file.
+  it's untouched in `VideoModal`/`Lightbox`/elsewhere); adds the
+  `ResizeObserver`-backed offset state and the `closest("header")` lookup;
+  restructures the portaled JSX into scrim + card as described above. No
+  new props on the component itself.
+- `Header.tsx`: **unchanged** — stays a Server Component.
+- `NavLinks.tsx`: the shared link `className` gains `block py-2` (tap-target
+  fix above). No prop or behavior changes.
+- No changes to `CloseButton.tsx` or any i18n message file.
 
 ## Test changes
 
