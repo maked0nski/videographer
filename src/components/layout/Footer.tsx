@@ -17,7 +17,7 @@ export function Footer({
 
   return (
     <footer className="border-border border-t">
-      <div className="text-text-secondary mx-auto flex max-w-6xl flex-col gap-4 px-6 py-10 text-sm sm:flex-row sm:items-center sm:justify-between">
+      <div className="text-text-secondary mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 py-10 text-center text-sm sm:flex-row sm:items-center sm:justify-between sm:text-left">
         <p>
           {brandName} — © {year}. {rightsText}
         </p>

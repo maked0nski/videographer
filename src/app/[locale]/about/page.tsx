@@ -71,9 +71,9 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       )}
 
-      <div id="contact" className="border-border mt-12 border-t pt-8">
+      <div id="contact" className="border-border mt-12 border-t pt-8 text-center sm:text-left">
         <h2 className="text-xl font-semibold">{siteSettings.aboutContactHeading}</h2>
-        <div className="mt-6">
+        <div className="mt-6 flex justify-center sm:justify-start">
           <SocialLinks
             profile={profile}
             labels={{

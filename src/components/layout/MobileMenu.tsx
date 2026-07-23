@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { NavLinks } from "./NavLinks";
 import { CloseButton } from "@/components/ui/CloseButton";
 import { VisuallyHidden } from "@/components/ui/VisuallyHidden";
@@ -34,18 +35,20 @@ export function MobileMenu({
         </svg>
       </button>
 
-      {isOpen && (
-        <div className="bg-bg fixed inset-0 z-50 flex flex-col p-6">
-          <div className="flex justify-end">
-            <CloseButton onClick={() => setIsOpen(false)} label={closeLabel} />
-          </div>
-          <NavLinks
-            links={links}
-            onNavigate={() => setIsOpen(false)}
-            className="mt-12 flex flex-col gap-8 text-2xl"
-          />
-        </div>
-      )}
+      {isOpen &&
+        createPortal(
+          <div className="bg-bg fixed inset-0 z-50 flex flex-col p-6">
+            <div className="flex justify-end">
+              <CloseButton onClick={() => setIsOpen(false)} label={closeLabel} />
+            </div>
+            <NavLinks
+              links={links}
+              onNavigate={() => setIsOpen(false)}
+              className="mt-12 flex flex-col gap-8 text-2xl"
+            />
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }
