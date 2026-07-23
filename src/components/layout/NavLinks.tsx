@@ -26,7 +26,7 @@ export function NavLinks({
               onClick={onNavigate}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "hover:text-accent text-sm font-medium tracking-wide uppercase transition-colors",
+                "hover:text-accent block py-2 text-sm font-medium tracking-wide uppercase transition-colors",
                 isActive ? "text-accent" : "text-text",
               )}
             >
