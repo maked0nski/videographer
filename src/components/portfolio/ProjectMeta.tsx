@@ -12,8 +12,7 @@ function MetaRow({ label, value }: { label: string; value?: string }) {
 
 /**
  * Optional fields (location, producerDirector, recognition, camera, lenses)
- * are simply omitted when absent — never rendered empty (FR-010, spec Edge
- * Cases).
+ * are simply omitted when absent — never rendered empty.
  */
 export function ProjectMeta({
   project,

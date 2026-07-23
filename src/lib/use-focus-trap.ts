@@ -7,8 +7,7 @@ const FOCUSABLE_SELECTOR =
 
 /**
  * Traps Tab/Shift+Tab focus inside `containerRef` and calls `onEscape` when
- * Escape is pressed — the shared behavior every modal/lightbox needs
- * (constitution Principle III, FR-004, FR-014, FR-015, research.md §9).
+ * Escape is pressed — the shared behavior every modal/lightbox needs.
  */
 export function useFocusTrap(containerRef: RefObject<HTMLElement | null>, onEscape: () => void) {
   useEffect(() => {

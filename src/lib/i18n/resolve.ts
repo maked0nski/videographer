@@ -2,7 +2,7 @@ import { LOCALES, type Locale, type Localized } from "@/types";
 
 /**
  * Resolves a localized field for the requested locale, falling back to
- * whichever other locale is populated (FR-021) instead of rendering nothing.
+ * whichever other locale is populated instead of rendering nothing.
  */
 export function resolveLocalized<T>(
   value: Localized<T> | undefined,

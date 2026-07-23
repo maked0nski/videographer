@@ -53,9 +53,9 @@ function rowCapacity(row: StillRow): number {
  * A lone portrait item left as its own row renders far taller than wide (its
  * width fills the full container, so height = containerWidth / aspectRatio
  * with aspectRatio well under 1 — confirmed live on `the-withshaw-case`'s
- * Behind the Scenes section, docs/superpowers/specs/2026-07-22-gallery-orphan-row-fix-design.md).
- * Merge it into whichever neighboring row has room instead — preferring the
- * next row, then the previous one — so it shares a row's height rather than
+ * Behind the Scenes section). Merge it into whichever neighboring row has
+ * room instead — preferring the next row, then the previous one — so it
+ * shares a row's height rather than
  * getting a full-bleed row of its own. Landscape orphans are left alone: a
  * lone landscape item is never taller than it is wide, so it's a fine
  * intentional "hero" row as-is.
@@ -91,11 +91,8 @@ function mergeOrphanRows(rows: StillRow[]): StillRow[] {
  * Groups items into same-orientation rows without reordering them — runs of
  * consecutive portrait items become rows of up to 4, runs of consecutive
  * landscape items become rows of up to 2, then any isolated single-item
- * portrait row is merged into a neighboring row (see `mergeOrphanRows`).
- * This is the "banded justified grid" from
- * docs/superpowers/specs/2026-07-21-project-page-gallery-redesign-design.md,
- * extended by the orphan-row fix from
- * docs/superpowers/specs/2026-07-22-gallery-orphan-row-fix-design.md.
+ * portrait row is merged into a neighboring row (see `mergeOrphanRows`) —
+ * a "banded justified grid".
  */
 export function groupIntoRows(items: StillItem[]): StillRow[] {
   const rows: StillRow[] = [];

@@ -7,8 +7,7 @@ const QUERY = "(prefers-reduced-motion: reduce)";
 /**
  * Tracks the visitor's `prefers-reduced-motion` OS/browser preference for the
  * few interactions that need to branch in JS (e.g. skipping the hero
- * autoplay) rather than being handled purely by CSS (constitution Principle
- * III, FR-028, research.md §9).
+ * autoplay) rather than being handled purely by CSS.
  */
 export function usePrefersReducedMotion(): boolean {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(

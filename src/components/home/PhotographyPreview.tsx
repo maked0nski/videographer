@@ -5,7 +5,7 @@ import { ButtonLink } from "@/components/ui/Button";
 
 /**
  * Renders only when at least one photo-type project is published, and is
- * omitted entirely otherwise (FR-006, SC-010) — no manual toggle needed.
+ * omitted entirely otherwise — no manual toggle needed.
  */
 export function PhotographyPreview({
   projects,

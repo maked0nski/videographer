@@ -5,7 +5,7 @@ import { DEFAULT_LOCALE, type Locale } from "@/types";
 /**
  * Picks `uk` when Ukrainian is the visitor's best-matching Accept-Language
  * preference, otherwise falls back to `en` — covers a missing header, no
- * overlap with uk/en, or a malformed header (research.md §3).
+ * overlap with uk/en, or a malformed header.
  */
 function detectLocale(acceptLanguage: string | null): Locale {
   if (!acceptLanguage) return DEFAULT_LOCALE;

@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
 
 /**
- * FR-003/FR-004/FR-014, SC-005: the homepage showreel button opens
- * VideoModal, and no request to youtube-nocookie.com fires until clicked.
+ * The homepage showreel button opens VideoModal, and no request to
+ * youtube-nocookie.com fires until clicked.
  */
 test.describe("Showreel modal", () => {
   test("showreel modal defers the YouTube request until opened, then closes via control and Escape", async ({

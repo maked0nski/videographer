@@ -37,8 +37,7 @@ function StillTile({ item, sizes = "50vw" }: { item: StillItem; sizes?: string }
  * aspect ratio, so every item's flex-grow-computed width exactly equals
  * height × its own aspect ratio — a true justified layout with zero
  * cropping, computed entirely by the browser's layout pass (no
- * client-side measurement, no layout shift)
- * (docs/superpowers/specs/2026-07-21-project-page-gallery-redesign-design.md).
+ * client-side measurement, no layout shift).
  */
 export function ClusteredStillsGrid({
   items,

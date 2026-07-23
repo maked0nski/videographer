@@ -8,7 +8,7 @@ import { cn } from "@/lib/cn";
 
 /**
  * Computes the equivalent path in the other locale from the current pathname
- * and swaps to it, preserving the current project slug (FR-019, FR-020).
+ * and swaps to it, preserving the current project slug.
  */
 export function LanguageSwitcher({ locale, label }: { locale: Locale; label: string }) {
   const pathname = usePathname();

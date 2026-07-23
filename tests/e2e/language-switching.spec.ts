@@ -1,9 +1,8 @@
 import { test, expect } from "@playwright/test";
 
 /**
- * SC-002/FR-020: language switching preserves the current project across
- * /uk <-> /en, and the bare "/" redirects per Accept-Language (falling back
- * to /en) — research.md §3.
+ * Language switching preserves the current project across /uk <-> /en, and
+ * the bare "/" redirects per Accept-Language (falling back to /en).
  */
 test.describe("Language switching", () => {
   test("switching language on a project page stays on the same project", async ({ page }) => {

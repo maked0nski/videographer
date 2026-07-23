@@ -10,7 +10,7 @@ import { useBodyScrollLock } from "@/lib/use-body-scroll-lock";
 
 /**
  * Full-size image view with next/previous navigation and two ways to close
- * (control + Escape) — FR-015, FR-027.
+ * (control + Escape).
  */
 export function Lightbox({
   images,

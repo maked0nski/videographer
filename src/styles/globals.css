@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-/* Design tokens (constitution Principle III): single source of truth for color,
-   type, and motion — every page and both locales consume these, never a raw hex
-   or one-off value in component code. */
+/* Design tokens: single source of truth for color, type, and motion — every
+   page and both locales consume these, never a raw hex or one-off value in
+   component code. */
 @theme {
   --color-bg: #222222;
   --color-bg-secondary: #2a2a2a;
@@ -41,9 +41,8 @@
     color: var(--color-bg);
   }
 
-  /* Shared visible focus state (constitution Principle III / FR-027) — every
-     interactive element gets this ring via :focus-visible, never a suppressed
-     outline. */
+  /* Shared visible focus state — every interactive element gets this ring
+     via :focus-visible, never a suppressed outline. */
   a:focus-visible,
   button:focus-visible,
   input:focus-visible,
@@ -54,8 +53,8 @@
 }
 
 @layer utilities {
-  /* prefers-reduced-motion (constitution Principle III / FR-028, research.md §9):
-     applied globally so no individual component has to remember to check it. */
+  /* prefers-reduced-motion: applied globally so no individual component has
+     to remember to check it. */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

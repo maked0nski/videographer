@@ -46,11 +46,11 @@ function entriesFor(payload: SanityWebhookPayload): RevalidationEntry[] {
 }
 
 /**
- * Sanity webhook → on-demand ISR revalidation (contracts/revalidate-webhook.md,
- * FR-025). Sanity signs every request; a request that fails verification is
- * rejected with 401 and triggers no revalidation. An unrecognized `_type`
- * still responds 200 with `revalidated: false` — it must never surface as a
- * visible failure to the non-technical owner.
+ * Sanity webhook → on-demand ISR revalidation. Sanity signs every request; a
+ * request that fails verification is rejected with 401 and triggers no
+ * revalidation. An unrecognized `_type` still responds 200 with
+ * `revalidated: false` — it must never surface as a visible failure to the
+ * non-technical owner.
  */
 export async function POST(request: NextRequest) {
   const secret = process.env.SANITY_REVALIDATE_SECRET;

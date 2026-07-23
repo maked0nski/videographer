@@ -9,8 +9,7 @@ export function localePath(locale: Locale, path: string = "/"): string {
 
 /**
  * Computes the equivalent path in another locale by swapping the leading
- * locale segment, preserving everything after it (project slug, etc.) — this
- * is what makes FR-020 possible.
+ * locale segment, preserving everything after it (project slug, etc.).
  */
 export function switchLocaleInPath(pathname: string, targetLocale: Locale): string {
   const segments = pathname.split("/").filter(Boolean);
@@ -23,8 +22,7 @@ export function switchLocaleInPath(pathname: string, targetLocale: Locale): stri
 /**
  * Builds the `hreflang` alternate-locale map for a locale-relative path
  * (e.g. "/work/my-slug") — used by every page's `generateMetadata` so search
- * engines see the correct uk/en pair per page, not just per site (FR-018,
- * T034/T060).
+ * engines see the correct uk/en pair per page, not just per site.
  */
 export function localizedAlternates(path: string = "/"): Record<string, string> {
   const alternates: Record<string, string> = {};

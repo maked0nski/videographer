@@ -56,7 +56,7 @@ export interface AdjacentProjects {
 }
 
 /** Full detail-page shape, locale-resolved — every `Localized<string>` field
- * has already been reduced to a plain string (falling back per FR-021). */
+ * has already been reduced to a plain string (falling back via `resolveLocalized`). */
 export interface ResolvedProject {
   slug: string;
   type: ProjectType;

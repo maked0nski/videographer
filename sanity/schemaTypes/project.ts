@@ -4,8 +4,7 @@ import { orderRankField, orderRankOrdering } from "@sanity/orderable-document-li
 /**
  * A single `type` field (Video/Photo) drives which of the fields below are
  * shown in Studio, the Work page filter, and page rendering — never a
- * separate category field (constitution Technology Constraints, FR-009,
- * FR-023, data-model.md).
+ * separate category field.
  */
 export default defineType({
   name: "project",

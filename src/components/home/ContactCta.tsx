@@ -2,7 +2,7 @@ import type { Locale } from "@/types";
 import { localePath } from "@/lib/i18n";
 import { ButtonLink } from "@/components/ui/Button";
 
-/** Links to the About & Contact page's contact section (FR-007). */
+/** Links to the About & Contact page's contact section. */
 export function ContactCta({
   locale,
   heading,

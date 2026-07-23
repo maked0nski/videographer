@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-/** FR-015: the photo lightbox opens, navigates next/previous, and closes via both a close control and Escape. */
+/** The photo lightbox opens, navigates next/previous, and closes via both a close control and Escape. */
 test.describe("Photo lightbox", () => {
   test("opens from the gallery, navigates next/previous, and closes both ways", async ({
     page,

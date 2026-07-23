@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
 
 /**
- * FR-003/FR-004/FR-014: a video project's hero player defers the YouTube
- * request until Play is clicked, then plays inline — no dialog, the iframe
- * appears directly on the page.
+ * A video project's hero player defers the YouTube request until Play is
+ * clicked, then plays inline — no dialog, the iframe appears directly on the
+ * page.
  */
 test.describe("Hero video player", () => {
   test("a video project's player defers the YouTube request until clicked, then plays inline with no dialog", async ({

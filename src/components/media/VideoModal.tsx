@@ -9,7 +9,7 @@ import { toYoutubeNoCookieEmbedUrl } from "@/lib/youtube";
 /**
  * The iframe element is only created while `isOpen` is true, and only ever
  * mounted after the visitor's click opened it — no request to
- * youtube-nocookie.com fires before that (FR-003, FR-004, FR-014).
+ * youtube-nocookie.com fires before that.
  */
 export function VideoModal({
   youtubeUrl,
