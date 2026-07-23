@@ -36,7 +36,10 @@ export function MobileMenu({
     if (!isOpen) return;
 
     const header = triggerRef.current?.closest("header");
-    if (!header) return;
+    if (!header) {
+      console.warn("MobileMenu: no ancestor <header> found — card will use its default position.");
+      return;
+    }
 
     const positionCard = () => {
       if (!cardRef.current) return;

@@ -62,9 +62,11 @@ own ancestor header directly:
   ref (`triggerRef`) and call `triggerRef.current.closest("header")` once the
   menu opens to get the header element — no new prop, no change to
   `Header.tsx` at all.
-- Only while `isOpen`, observe that header element with a `ResizeObserver` to
-  read `getBoundingClientRect().bottom` into state, adding a small fixed gap
-  (8px) for the card's `top` style. The observer is created on open and
+- Only while `isOpen`, observe that header element with a `ResizeObserver` and
+  write `getBoundingClientRect().bottom` (plus a small fixed 8px gap)
+  directly to the card's `top` style via a ref — imperatively, not through
+  React state, so it doesn't trigger an extra render (see Animation below
+  for why that matters). The observer is created on open and
   disconnected on close — never running while the menu is closed. (The
   header is the first element on the page and `sticky top-0`, so its `top`
   is always `0`; only its `bottom` — i.e. its height — can change, which
